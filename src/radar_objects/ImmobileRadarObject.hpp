@@ -6,6 +6,9 @@ class ImmobileRadarObject : public RadarObject {
    protected:
     double m_height;
 
+    ImmobileRadarObject(RealPosition position, double height)
+        : RadarObject(position), m_height(height) {}
+
    public:
     virtual RealPosition position_after(double delta_time) {
         return position();

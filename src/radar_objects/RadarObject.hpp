@@ -10,8 +10,10 @@ class RadarObject {
     RealPosition m_position;
     double m_radius;
 
+    RadarObject(RealPosition position)
+        : m_id(m_next_id++), m_position(position) {}
+
    private:
-    RadarObject() : m_id(m_next_id++) {}
     static RadarObjectId m_next_id;
 
    public:
