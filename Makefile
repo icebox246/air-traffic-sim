@@ -2,6 +2,17 @@ CXX=g++
 
 SOURCES += src/main.cpp
 
+SOURCES += src/RadarSystem.cpp
+HEADERS += src/RadarSystem.hpp
+
+HEADERS += src/radar_objects/RadarObject.hpp
+HEADERS += src/radar_objects/RadarObjectId.hpp
+HEADERS += src/radar_objects/Route.hpp
+
+HEADERS += src/terrain/Terrain.hpp
+
+HEADERS += src/warnings/Warning.hpp
+
 SOURCES += src/ui/GUI.cpp
 HEADERS += src/ui/GUI.hpp
 
