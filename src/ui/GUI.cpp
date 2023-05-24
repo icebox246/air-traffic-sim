@@ -6,8 +6,12 @@ GUI::~GUI() { CloseWindow(); }
 
 void GUI::run() {
     while (!WindowShouldClose()) {
+        m_signal_process.call(GetFrameTime());
+
         BeginDrawing();
         { ClearBackground(RAYWHITE); }
         EndDrawing();
     }
 }
+
+Signal<double>& GUI::signal_process() { return m_signal_process; };

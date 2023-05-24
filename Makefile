@@ -5,6 +5,9 @@ SOURCES += src/main.cpp
 SOURCES += src/ui/GUI.cpp
 HEADERS += src/ui/GUI.hpp
 
+SOURCES += src/ui/Signal.cpp
+HEADERS += src/ui/Signal.hpp
+
 CFLAGS += -Ithirdparty/
 CFLAGS += `pkg-config --cflags raylib`
 
