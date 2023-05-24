@@ -11,6 +11,7 @@ class RadarObject {
     double m_radius;
 
    private:
+    RadarObject() : m_id(m_next_id++) {}
     static RadarObjectId m_next_id;
 
    public:
