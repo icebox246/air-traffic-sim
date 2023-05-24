@@ -24,7 +24,6 @@ HEADERS += src/warnings/Warning.hpp
 SOURCES += src/ui/GUI.cpp
 HEADERS += src/ui/GUI.hpp
 
-SOURCES += src/ui/Signal.cpp
 HEADERS += src/ui/Signal.hpp
 
 CFLAGS += -Ithirdparty/
