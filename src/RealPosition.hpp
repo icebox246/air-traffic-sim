@@ -1,0 +1,15 @@
+#pragma once
+
+#include <math.h>
+
+#include "Position.hpp"
+
+class RealPosition : public Position<double> {
+   public:
+    RealPosition(double x, double y) : Position<double>(x, y) {}
+    double distance_from(RealPosition other) {
+        double dx = x() - other.x();
+        double dy = y() - other.y();
+        return sqrt(dx * dx + dy * dy);
+    }
+};

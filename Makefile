@@ -5,8 +5,12 @@ SOURCES += src/main.cpp
 SOURCES += src/RadarSystem.cpp
 HEADERS += src/RadarSystem.hpp
 
+HEADERS += src/Position.hpp
+HEADERS += src/RealPosition.hpp
+
 HEADERS += src/radar_objects/RadarObject.hpp
 HEADERS += src/radar_objects/RadarObjectId.hpp
+HEADERS += src/radar_objects/RadarObjectKind.hpp
 HEADERS += src/radar_objects/Route.hpp
 
 HEADERS += src/terrain/Terrain.hpp
