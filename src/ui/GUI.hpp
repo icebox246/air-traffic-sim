@@ -9,12 +9,12 @@
 
 class GUI {
    protected:
-    Signal<double> m_signal_process;
+    Signal<void, double> m_signal_process;
 
    public:
     GUI(std::string title);
     ~GUI();
-    Signal<double>& signal_process();
+    Signal<void, double>& signal_process() { return m_signal_process; };
 
     void run();
 };

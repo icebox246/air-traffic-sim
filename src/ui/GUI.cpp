@@ -14,4 +14,3 @@ void GUI::run() {
     }
 }
 
-Signal<double>& GUI::signal_process() { return m_signal_process; };

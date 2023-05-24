@@ -2,15 +2,15 @@
 
 #include <functional>
 
-template <typename... T>
+template <typename rT, typename... aTs>
 class Signal {
    protected:
-    std::function<void(T...)> m_callback;
+    std::function<rT(aTs...)> m_callback;
 
    public:
-    void connect(std::function<void(T...)> callback) { m_callback = callback; }
+    void connect(std::function<rT(aTs...)> callback) { m_callback = callback; }
 
-    void call(T... args) {
+    void call(aTs... args) {
         if (m_callback) m_callback(args...);
     }
 };
