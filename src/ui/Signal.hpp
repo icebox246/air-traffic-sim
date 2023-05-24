@@ -10,7 +10,7 @@ class Signal {
    public:
     void connect(std::function<rT(aTs...)> callback) { m_callback = callback; }
 
-    void call(aTs... args) {
-        if (m_callback) m_callback(args...);
+    rT call(aTs... args) {
+        if (m_callback) return m_callback(args...);
     }
 };
