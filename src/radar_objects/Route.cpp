@@ -2,10 +2,23 @@
 
 #include "../util.hpp"
 
-double Route::altitude() const { TODO(); }
+double Route::altitude() const {
+    ASSERT(!m_checkpoints.empty());
+    return m_checkpoints.front().altitude();
+}
 
-double Route::velocity() const { TODO(); }
+double Route::velocity() const {
+    ASSERT(!m_checkpoints.empty());
+    return m_checkpoints.front().velocity();
+}
 
-RealPosition Route::target() const { TODO(); };
+RealPosition Route::target() const {
+    ASSERT(!m_checkpoints.empty());
+    return m_checkpoints.front().point();
+};
 
-bool Route::advance_checkpoint() { TODO(); };
+bool Route::advance_checkpoint() {
+    ASSERT(!m_checkpoints.empty());
+    m_checkpoints.erase(m_checkpoints.cbegin());
+    return !m_checkpoints.empty();
+};
