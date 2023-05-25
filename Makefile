@@ -37,6 +37,7 @@ HEADERS += src/ui/Signal.hpp
 
 CFLAGS += -Ithirdparty/
 CFLAGS += `pkg-config --cflags raylib`
+CFLAGS += -g
 
 LIBS += `pkg-config --libs raylib`
 
