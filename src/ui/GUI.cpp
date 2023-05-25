@@ -4,15 +4,16 @@ GUI::GUI(std::string title) { InitWindow(WIDTH, HEIGHT, title.c_str()); }
 
 GUI::~GUI() { CloseWindow(); }
 
-void GUI::run() {
+void GUI::run(RadarSystem& radar_system) {
     while (!WindowShouldClose()) {
-        m_signal_process.call(GetFrameTime());
+        radar_system.process(GetFrameTime());
 
         BeginDrawing();
         {
-            auto radar_objects = m_signal_get_radar_objects.call();
-            auto sx = m_signal_get_sim_size_x.call();
-            auto sy = m_signal_get_sim_size_y.call();
+            auto& radar_objects = radar_system.radar_objects();
+            // TODO: actually get the size from terrain
+            auto sx = 32;
+            auto sy = 32;
 
             for (auto& ro : radar_objects) {
                 RealPosition pos = ro->position();

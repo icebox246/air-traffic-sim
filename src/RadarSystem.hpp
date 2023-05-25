@@ -11,13 +11,13 @@
 
 class RadarSystem {
    private:
-    std::vector<std::shared_ptr<RadarObject>> m_radar_objects;
+    std::vector<std::unique_ptr<RadarObject>> m_radar_objects;
     std::vector<std::unique_ptr<Warning>> m_warnings;
     Terrain m_terrain;
 
    public:
     RadarSystem();
-    std::vector<std::shared_ptr<RadarObject>>& radar_objects() {
+    std::vector<std::unique_ptr<RadarObject>>& radar_objects() {
         return m_radar_objects;
     }
     std::vector<std::unique_ptr<Warning>>& warnings() { return m_warnings; }
