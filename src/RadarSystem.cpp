@@ -7,13 +7,13 @@
 
 RadarSystem::RadarSystem() {
     // TODO: don't do that
-    auto building = std::make_unique<Skyscraper>(RealPosition(1, 2), 32);
+    auto building = std::make_shared<Skyscraper>(RealPosition(1, 2), 32);
     Route route = Route({
         RouteCheckpoint({2, 2}, 0.5, 1000),
         RouteCheckpoint({2, 4}, 0.5, 1000),
         RouteCheckpoint({0, 2}, 0.5, 1000),
     });
-    auto plane = std::make_unique<Plane>(RealPosition(0, 0), std::move(route));
+    auto plane = std::make_shared<Plane>(RealPosition(0, 0), std::move(route));
 
     m_radar_objects.push_back(std::move(building));
     m_radar_objects.push_back(std::move(plane));
