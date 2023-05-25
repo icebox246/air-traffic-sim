@@ -1,5 +1,7 @@
 # Air Traffic Sim
 
+[![Action Status](https://github.com/icebox246/air-traffic-sim/actions/workflows/clang-format-check.yml/badge.svg)](https://github.com/icebox246/air-traffic-sim/actions)
+
 ## Building
 
 Requirements:
