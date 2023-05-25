@@ -16,6 +16,10 @@ HEADERS += src/radar_objects/ImmobileRadarObject.hpp
 HEADERS += src/radar_objects/Skyscraper.hpp
 HEADERS += src/radar_objects/Mountain.hpp
 HEADERS += src/radar_objects/Windmill.hpp
+HEADERS += src/radar_objects/Plane.hpp
+HEADERS += src/radar_objects/Helicopter.hpp
+HEADERS += src/radar_objects/Glider.hpp
+HEADERS += src/radar_objects/HotAirBalloon.hpp
 
 HEADERS += src/terrain/Terrain.hpp
 

@@ -4,7 +4,7 @@ enum class RadarObjectKind {
     Plane,
     Helicopter,
     Glider,
-    HotAirBallon,
+    HotAirBalloon,
     Skyscraper,
     Mountain,
     Windmill,
