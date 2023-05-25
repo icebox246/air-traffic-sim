@@ -26,4 +26,7 @@ class RadarSystem {
     bool change_mobile_object_route(RadarObjectId id, Route new_route);
     void load_from_string_data(std::string data);
     void process(double delta);
+
+   private:
+    void generate_random_mobile_radar_object();
 };
