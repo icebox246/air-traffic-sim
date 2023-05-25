@@ -13,4 +13,3 @@ void GUI::run() {
         EndDrawing();
     }
 }
-
