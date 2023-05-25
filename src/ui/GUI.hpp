@@ -8,6 +8,8 @@
 #include "Signal.hpp"
 
 class GUI {
+    static const size_t WIDTH = 1000;
+    static const size_t HEIGHT = 800;
    protected:
     Signal<void, double> m_signal_process;
 

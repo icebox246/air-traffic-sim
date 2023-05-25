@@ -1,6 +1,6 @@
 #include "GUI.hpp"
 
-GUI::GUI(std::string title) { InitWindow(800, 600, title.c_str()); }
+GUI::GUI(std::string title) { InitWindow(WIDTH, HEIGHT, title.c_str()); }
 
 GUI::~GUI() { CloseWindow(); }
 
