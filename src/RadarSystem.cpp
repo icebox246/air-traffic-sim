@@ -13,11 +13,11 @@
 RadarSystem::RadarSystem() {
     // TODO: don't do that
     std::unique_ptr<RadarObject> building =
-        std::make_unique<Skyscraper>(RealPosition(2, 5), 32);
+        std::make_unique<Skyscraper>(RealPosition(5, 5), 32);
     m_radar_objects.push_back(std::move(building));
-    building = std::make_unique<Mountain>(RealPosition(4, 10), 32);
+    building = std::make_unique<Mountain>(RealPosition(10, 10), 32);
     m_radar_objects.push_back(std::move(building));
-    building = std::make_unique<Windmill>(RealPosition(6, 15), 32);
+    building = std::make_unique<Windmill>(RealPosition(15, 15), 32);
     m_radar_objects.push_back(std::move(building));
 
     for (auto i = 0; i < 10; i++) {
