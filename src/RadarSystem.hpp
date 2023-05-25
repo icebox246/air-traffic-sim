@@ -16,7 +16,7 @@ class RadarSystem {
     Terrain m_terrain;
 
    public:
-    RadarSystem() {}
+    RadarSystem();
     std::vector<std::unique_ptr<RadarObject>>& radar_objects() {
         return m_radar_objects;
     }
