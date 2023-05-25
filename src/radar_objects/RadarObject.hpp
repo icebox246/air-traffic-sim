@@ -25,4 +25,5 @@ class RadarObject {
     virtual double upper_bound() = 0;
     virtual double lower_bound() = 0;
     virtual RadarObjectKind kind() = 0;
+    virtual void process(double delta_time) = 0;
 };

@@ -12,6 +12,11 @@ int main() {
 
     gui.signal_process().connect(
         [&](double delta_time) { radar_system.process(delta_time); });
+    gui.signal_get_radar_objects().connect([&]() -> auto& {
+        return radar_system.radar_objects();
+    });
+    gui.signal_get_sim_size_x().connect([&]() { return 32; });
+    gui.signal_get_sim_size_y().connect([&]() { return 32; });
 
     gui.run();
 

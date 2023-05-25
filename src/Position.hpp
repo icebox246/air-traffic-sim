@@ -10,7 +10,7 @@ class Position {
     }
 
    public:
-    T x() { return m_x; }
-    T y() { return m_y; }
+    T x() const { return m_x; }
+    T y() const { return m_y; }
     Position<T> moved(T dx, T dy) { return {m_x + dx, m_y + dy}; }
 };
