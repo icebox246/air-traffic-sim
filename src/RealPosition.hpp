@@ -13,4 +13,8 @@ class RealPosition : public Position<double> {
         double dy = y() - other.y();
         return sqrt(dx * dx + dy * dy);
     }
+    RealPosition moved(double dx, double dy) {
+        auto pos = Position<double>::moved(dx, dy);
+        return {pos.x(), pos.y()};
+    }
 };
