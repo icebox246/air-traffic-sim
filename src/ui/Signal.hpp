@@ -24,10 +24,11 @@ class Signal<void, aTs...> {
     std::function<void(aTs...)> m_callback;
 
    public:
-    void connect(std::function<void(aTs...)> callback) { m_callback = callback; }
+    void connect(std::function<void(aTs...)> callback) {
+        m_callback = callback;
+    }
 
     void call(aTs... args) {
-        if (m_callback)
-            return m_callback(args...);
+        if (m_callback) return m_callback(args...);
     }
 };

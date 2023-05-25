@@ -18,7 +18,7 @@ void GUI::run() {
                 RealPosition pos = ro->position();
                 int x = pos.x() / sx * HEIGHT;
                 int y = pos.y() / sy * HEIGHT;
-                DrawEllipseLines(x,y, 10, 10, RED);
+                DrawEllipseLines(x, y, 10, 10, RED);
             }
 
             ClearBackground(RAYWHITE);
