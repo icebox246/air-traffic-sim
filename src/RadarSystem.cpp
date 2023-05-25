@@ -20,7 +20,14 @@ RadarSystem::RadarSystem() {
 
 bool RadarSystem::change_mobile_object_route(RadarObjectId id,
                                              Route new_route) {
-    TODO();
+    for (auto& ro : m_radar_objects) {
+        if (ro->id() != id) continue;
+        auto as_mobile = dynamic_cast<MobileRadarObject*>(ro.get());
+        if (!as_mobile) return false;
+        as_mobile->change_route(std::move(new_route));
+        return true;
+    }
+    return false;
 }
 
 void RadarSystem::load_from_string_data(std::string data) { TODO(); }
