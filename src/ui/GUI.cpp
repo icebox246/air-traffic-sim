@@ -3,10 +3,36 @@
 #include <raylib.h>
 
 #include "../radar_objects/MobileRadarObject.hpp"
+#include "../util.hpp"
 
-GUI::GUI(std::string title) { InitWindow(WIDTH, HEIGHT, title.c_str()); }
+GUI::GUI(std::string title) {
+    InitWindow(WIDTH, HEIGHT, title.c_str());
 
-GUI::~GUI() { CloseWindow(); }
+    m_icon_textures[(size_t)RadarObjectKind::Plane] =
+        LoadTexture("resources/icons_plane.png");
+    m_icon_textures[(size_t)RadarObjectKind::Helicopter] =
+        LoadTexture("resources/icons_helicopter.png");
+    m_icon_textures[(size_t)RadarObjectKind::Glider] =
+        LoadTexture("resources/icons_glider.png");
+    m_icon_textures[(size_t)RadarObjectKind::HotAirBalloon] =
+        LoadTexture("resources/icons_balloon.png");
+    m_icon_textures[(size_t)RadarObjectKind::Skyscraper] =
+        LoadTexture("resources/icons_skyscraper.png");
+    m_icon_textures[(size_t)RadarObjectKind::Mountain] =
+        LoadTexture("resources/icons_mountain.png");
+    m_icon_textures[(size_t)RadarObjectKind::Windmill] =
+        LoadTexture("resources/icons_windmill.png");
+
+    for (auto i = 0; i < (size_t)RadarObjectKind::CountKinds; i++)
+        SetTextureFilter(m_icon_textures[i], TEXTURE_FILTER_BILINEAR);
+}
+
+GUI::~GUI() {
+    for (auto i = 0; i < (size_t)RadarObjectKind::CountKinds; i++)
+        UnloadTexture(m_icon_textures[i]);
+
+    CloseWindow();
+}
 
 void GUI::run(RadarSystem& radar_system) {
     while (!WindowShouldClose()) {
@@ -21,21 +47,38 @@ void GUI::run(RadarSystem& radar_system) {
 
             for (auto& ro : radar_objects) {
                 RealPosition pos = ro->position();
-                int x = pos.x() / sx * HEIGHT;
-                int y = pos.y() / sy * HEIGHT;
+                float texture_scale = 0.4;
+                double angle = 0;
                 auto as_mobile = dynamic_cast<MobileRadarObject*>(ro.get());
                 if (as_mobile) {
-                    double angle = as_mobile->heading();
-                    Rectangle rec;
-                    rec.x = x - 10;
-                    rec.y = y - 15;
-                    rec.width = 20;
-                    rec.height = 30;
-                    DrawRectanglePro(rec, Vector2{10, 15}, angle * RAD2DEG - 90,
-                                     RED);
-                } else {
-                    DrawEllipseLines(x, y, 10, 10, RED);
+                    angle = as_mobile->heading() * RAD2DEG - 90;
+                    RealPosition last_pos = pos;
+                    for (auto& checkpoint : as_mobile->route().checkpoints()) {
+                        RealPosition now_pos = checkpoint.point();
+                        DrawLine(last_pos.x() / sx * HEIGHT,
+                                 last_pos.y() / sy * HEIGHT,
+                                 now_pos.x() / sx * HEIGHT,
+                                 now_pos.y() / sy * HEIGHT, GRAY);
+                        last_pos = now_pos;
+                    }
                 }
+                double x = pos.x() / sx * HEIGHT;
+                double y = pos.y() / sy * HEIGHT;
+                Texture& tex = m_icon_textures[(size_t)ro->kind()];
+                Rectangle srec;
+                srec.x = 0;
+                srec.y = 0;
+                srec.width = tex.width;
+                srec.height = tex.height;
+                Rectangle drec;
+                drec.x = x;
+                drec.y = y;
+                drec.width = tex.width * texture_scale;
+                drec.height = tex.height * texture_scale;
+                Vector2 origin;
+                origin.x = tex.width * texture_scale * 0.5;
+                origin.y = tex.height * texture_scale * 0.5;
+                DrawTexturePro(tex, srec, drec, origin, angle, WHITE);
             }
 
             ClearBackground(RAYWHITE);

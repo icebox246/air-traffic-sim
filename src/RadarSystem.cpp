@@ -20,7 +20,7 @@ RadarSystem::RadarSystem() {
     building = std::make_unique<Windmill>(RealPosition(15, 15), 32);
     m_radar_objects.push_back(std::move(building));
 
-    for (auto i = 0; i < 10; i++) {
+    for (auto i = 0; i < 3; i++) {
         generate_random_mobile_radar_object();
     }
 }
@@ -63,26 +63,41 @@ void RadarSystem::generate_random_mobile_radar_object() {
                             (rand() / (double)(RAND_MAX >> 1) - 1) * range);
     };
     std::vector<RouteCheckpoint> checkpoints = {};
-    int checkpoint_count = rand() % 8 + 1;
+    int checkpoint_count = rand() % 2 + 1;
     RealPosition origin;
     if (rand() & 1)
-        origin = RealPosition((rand() & 1) * m_terrain.width(),
+        origin = RealPosition((rand() & 1) * int(m_terrain.width() + 2) - 1,
                               (rand() / (double)RAND_MAX) * m_terrain.height());
     else
         origin = RealPosition((rand() / (double)RAND_MAX) * m_terrain.width(),
-                              (rand() & 1) * m_terrain.height());
-    RealPosition last_pos = origin;
+                              (rand() & 1) * int(m_terrain.height() + 2) - 1);
 
-    for (auto i = 0; i < checkpoint_count; i++) {
-        RealPosition pos =
-            spread_position_around(origin, m_terrain.width() / 2.);
-        if (pos.x() < 0) pos = pos.moved(-pos.x(), 0);
-        if (pos.y() < 0) pos = pos.moved(0, -pos.y());
-        if (pos.x() > m_terrain.width())
-            pos = pos.moved(m_terrain.width() - pos.x(), 0);
-        if (pos.y() > m_terrain.height())
-            pos = pos.moved(0, m_terrain.height() - pos.y());
+    {
+        RealPosition last_pos = origin;
+        for (auto i = 0; i < checkpoint_count; i++) {
+            RealPosition pos;
+            do {
+                pos = spread_position_around(last_pos, m_terrain.width() / 1.5);
+            } while (pos.x() <= 0 || pos.y() <= 0 ||
+                     pos.x() > m_terrain.width() ||
+                     pos.y() > m_terrain.height());
 
+            double velocity = (rand() % 15 + 10) / 10.;
+            double altitude = ((rand() % 20) + 10) * 100;
+            checkpoints.emplace_back(pos, velocity, altitude);
+            last_pos = pos;
+        }
+    }
+
+    {
+        RealPosition pos;
+        if (rand() & 1)
+            pos =
+                RealPosition((rand() & 1) * int(m_terrain.width() + 2) - 1,
+                             (rand() / (double)RAND_MAX) * m_terrain.height());
+        else
+            pos = RealPosition((rand() / (double)RAND_MAX) * m_terrain.width(),
+                               (rand() & 1) * int(m_terrain.height() + 2) - 1);
         double velocity = (rand() % 15 + 10) / 10.;
         double altitude = ((rand() % 20) + 10) * 100;
         checkpoints.emplace_back(pos, velocity, altitude);
