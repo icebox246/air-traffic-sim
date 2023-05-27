@@ -11,6 +11,7 @@
 #include "../radar_objects/RadarObject.hpp"
 #include "Button.hpp"
 #include "RadarView.hpp"
+#include "RouteEditor.hpp"
 #include "Signal.hpp"
 
 class GUI {
@@ -22,6 +23,7 @@ class GUI {
     bool m_paused = false;
     Button m_pause_toggle_button;
     RadarView m_radar_view;
+    RouteEditor m_route_editor;
 
     void process_widgets();
     void add_widget(Widget& widget);
