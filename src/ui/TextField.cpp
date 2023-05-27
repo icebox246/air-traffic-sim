@@ -1,6 +1,7 @@
 #include "TextField.hpp"
 
 #include <raylib.h>
+
 #include <iostream>
 
 size_t TextField::m_next_id = 0;
