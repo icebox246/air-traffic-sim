@@ -88,7 +88,7 @@ Route RouteEditor::get_route() const {
 }
 
 void RouteEditor::process() {
-    std::string props_caption = "Editing: " + std::to_string(m_radar_object_id);
+    std::string props_caption = "Editing: #" + std::to_string(m_radar_object_id);
     GuiGroupBox(m_props_bounds, props_caption.c_str());
     Rectangle rec;
     rec.x = m_props_bounds.x + 8;

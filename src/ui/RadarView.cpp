@@ -74,6 +74,7 @@ void RadarView::process() {
         origin.x = tex.width * texture_scale * 0.5;
         origin.y = tex.height * texture_scale * 0.5;
         DrawTexturePro(tex, srec, drec, origin, angle, WHITE);
+        DrawText(("#" + std::to_string(ro->id())).c_str(), x, y + 32, 10, BLACK);
     }
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
