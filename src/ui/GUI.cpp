@@ -15,7 +15,6 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
 
     m_pause_toggle_button.signal_clicked().connect(
         [this]() { set_paused(!m_paused); });
-
     add_widget(m_pause_toggle_button);
 
     m_radar_view.load_textures();
@@ -25,7 +24,8 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
 GUI::~GUI() { CloseWindow(); }
 
 void GUI::process_widgets() {
-    for (auto& w : m_widgets) w.get().process();
+    for (auto& w : m_widgets)
+        if (w.get().visible()) w.get().process();
 }
 
 void GUI::add_widget(Widget& widget) { m_widgets.emplace_back(widget); }
