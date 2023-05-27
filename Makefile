@@ -32,6 +32,16 @@ HEADERS += src/warnings/Warning.hpp
 
 SOURCES += src/ui/GUI.cpp
 HEADERS += src/ui/GUI.hpp
+SOURCES += src/ui/Button.cpp
+HEADERS += src/ui/Button.hpp
+SOURCES += src/ui/TextField.cpp
+HEADERS += src/ui/TextField.hpp
+SOURCES += src/ui/RealField.cpp
+HEADERS += src/ui/RealField.hpp
+SOURCES += src/ui/RadarView.cpp
+HEADERS += src/ui/RadarView.hpp
+SOURCES += src/ui/RouteEditor.cpp
+HEADERS += src/ui/RouteEditor.hpp
 
 HEADERS += src/ui/Signal.hpp
 
@@ -41,10 +51,16 @@ CFLAGS += -g
 
 LIBS += `pkg-config --libs raylib`
 
-sim: ${SOURCES} ${HEADERS}
-	${CXX} -o $@ ${CFLAGS} ${LIBS} ${SOURCES}
+OBJECTS = $(subst src/,.obj/,$(subst .cpp,.o,$(SOURCES)))
+
+sim: ${OBJECTS} ${HEADERS}
+	${CXX} -o $@ ${LIBS} ${OBJECTS}
 
 dev: compile_flags.txt
 
 compile_flags.txt:
 	echo ${CFLAGS} | tr ' ' '\n' > $@
+
+.obj/%.o: src/%.cpp
+	[ -d `dirname $@` ] || mkdir -p `dirname $@`
+	$(CXX) -c $< ${CFLAGS} -o $@

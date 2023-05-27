@@ -44,7 +44,7 @@ void MobileRadarObject::process(double delta_time) {
         delta_time -= time_to_checkpoint();
         if (!m_route.advance_checkpoint()) {
             // should destroy object
-            TODO();
+            return;
         }
     }
 
