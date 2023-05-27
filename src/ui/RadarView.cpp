@@ -1,5 +1,7 @@
 #include "RadarView.hpp"
 
+#include <raylib.h>
+
 #include "../radar_objects/MobileRadarObject.hpp"
 #include "../util.hpp"
 
@@ -72,5 +74,21 @@ void RadarView::process() {
         origin.x = tex.width * texture_scale * 0.5;
         origin.y = tex.height * texture_scale * 0.5;
         DrawTexturePro(tex, srec, drec, origin, angle, WHITE);
+    }
+
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        auto mouse_x = GetMouseX();
+        auto mouse_y = GetMouseY();
+        auto mouse_pos = RealPosition(mouse_x, mouse_y);
+
+        for (auto& ro : radar_objects) {
+            RealPosition pos = ro->position();
+            double x = pos.x() / sx * m_bounds.width;
+            double y = pos.y() / sy * m_bounds.height;
+
+            if (RealPosition(x, y).distance_from(mouse_pos) > 32) continue;
+
+            m_signal_radar_object_clicked.call(ro->id());
+        }
     }
 }

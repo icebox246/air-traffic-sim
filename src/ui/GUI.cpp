@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 
+#include "../radar_objects/MobileRadarObject.hpp"
 #include "../util.hpp"
 
 #define RAYGUI_IMPLEMENTATION
@@ -18,6 +19,15 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
     add_widget(m_pause_toggle_button);
 
     m_radar_view.load_textures();
+    m_radar_view.signal_radar_object_clicked().connect(
+        [this](RadarObjectId obj_id) {
+            for (auto& ro : m_radar_system.radar_objects()) {
+                if (ro->id() != obj_id) continue;
+                auto as_mobile = dynamic_cast<MobileRadarObject*>(ro.get());
+                if (!as_mobile) break;
+                std::cout << "Clicked: " << ro->id() << std::endl;
+            }
+        });
     add_widget(m_radar_view);
 }
 
