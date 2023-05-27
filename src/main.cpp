@@ -8,9 +8,9 @@ int main() {
 
     RadarSystem radar_system;
 
-    GUI gui("Air Traffic Simulator");
+    GUI gui("Air Traffic Simulator", radar_system);
 
-    gui.run(radar_system);
+    gui.run();
 
     std::cout << "Bye, Ship Man!" << std::endl;
 

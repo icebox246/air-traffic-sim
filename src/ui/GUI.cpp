@@ -5,7 +5,8 @@
 #include "../radar_objects/MobileRadarObject.hpp"
 #include "../util.hpp"
 
-GUI::GUI(std::string title) {
+GUI::GUI(std::string title, RadarSystem& radar_system)
+    : m_radar_system(radar_system) {
     InitWindow(WIDTH, HEIGHT, title.c_str());
 
     m_icon_textures[(size_t)RadarObjectKind::Plane] =
@@ -34,13 +35,13 @@ GUI::~GUI() {
     CloseWindow();
 }
 
-void GUI::run(RadarSystem& radar_system) {
+void GUI::run() {
     while (!WindowShouldClose()) {
-        radar_system.process(GetFrameTime());
+        m_radar_system.process(GetFrameTime());
 
         BeginDrawing();
         {
-            auto& radar_objects = radar_system.radar_objects();
+            auto& radar_objects = m_radar_system.radar_objects();
             // TODO: actually get the size from terrain
             auto sx = 32;
             auto sy = 32;
