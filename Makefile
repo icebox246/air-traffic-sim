@@ -51,10 +51,16 @@ CFLAGS += -g
 
 LIBS += `pkg-config --libs raylib`
 
-sim: ${SOURCES} ${HEADERS}
-	${CXX} -o $@ ${CFLAGS} ${LIBS} ${SOURCES}
+OBJECTS = $(subst src/,.obj/,$(subst .cpp,.o,$(SOURCES)))
+
+sim: ${OBJECTS} ${HEADERS}
+	${CXX} -o $@ ${LIBS} ${OBJECTS}
 
 dev: compile_flags.txt
 
 compile_flags.txt:
 	echo ${CFLAGS} | tr ' ' '\n' > $@
+
+.obj/%.o: src/%.cpp
+	[ -d `dirname $@` ] || mkdir -p `dirname $@`
+	$(CXX) -c $< ${CFLAGS} -o $@
