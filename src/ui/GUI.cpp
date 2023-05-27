@@ -43,8 +43,8 @@ void GUI::run() {
         {
             auto& radar_objects = m_radar_system.radar_objects();
             // TODO: actually get the size from terrain
-            auto sx = 32;
-            auto sy = 32;
+            auto sx = m_radar_system.terrain().width();
+            auto sy = m_radar_system.terrain().height();
 
             for (auto& ro : radar_objects) {
                 RealPosition pos = ro->position();
