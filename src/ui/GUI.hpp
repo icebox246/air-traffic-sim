@@ -10,6 +10,7 @@
 #include "../RadarSystem.hpp"
 #include "../radar_objects/RadarObject.hpp"
 #include "Button.hpp"
+#include "RadarView.hpp"
 #include "Signal.hpp"
 
 class GUI {
@@ -20,7 +21,7 @@ class GUI {
     RadarSystem& m_radar_system;
     bool m_paused = false;
     Button m_pause_toggle_button;
-    Texture m_icon_textures[(size_t)RadarObjectKind::CountKinds];
+    RadarView m_radar_view;
 
     void process_widgets();
     void add_widget(Widget& widget);
