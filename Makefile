@@ -32,6 +32,8 @@ HEADERS += src/warnings/Warning.hpp
 
 SOURCES += src/ui/GUI.cpp
 HEADERS += src/ui/GUI.hpp
+SOURCES += src/ui/Button.cpp
+HEADERS += src/ui/Button.hpp
 
 HEADERS += src/ui/Signal.hpp
 

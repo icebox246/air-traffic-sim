@@ -5,8 +5,12 @@
 #include "../radar_objects/MobileRadarObject.hpp"
 #include "../util.hpp"
 
+#define RAYGUI_IMPLEMENTATION
+#include <raygui.h>
+
 GUI::GUI(std::string title, RadarSystem& radar_system)
-    : m_radar_system(radar_system) {
+    : m_radar_system(radar_system),
+      m_pause_toggle_button(HEIGHT, 0, 32, 32, "#132#") {
     InitWindow(WIDTH, HEIGHT, title.c_str());
 
     m_icon_textures[(size_t)RadarObjectKind::Plane] =
@@ -26,6 +30,9 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
 
     for (auto i = 0; i < (size_t)RadarObjectKind::CountKinds; i++)
         SetTextureFilter(m_icon_textures[i], TEXTURE_FILTER_BILINEAR);
+
+    m_pause_toggle_button.signal_clicked().connect(
+        [this]() { set_paused(!m_paused); });
 }
 
 GUI::~GUI() {
@@ -37,10 +44,14 @@ GUI::~GUI() {
 
 void GUI::run() {
     while (!WindowShouldClose()) {
-        m_radar_system.process(GetFrameTime());
+        if (!m_paused) {
+            m_radar_system.process(GetFrameTime());
+        }
 
         BeginDrawing();
         {
+            m_pause_toggle_button.process();
+
             auto& radar_objects = m_radar_system.radar_objects();
             // TODO: actually get the size from terrain
             auto sx = m_radar_system.terrain().width();
