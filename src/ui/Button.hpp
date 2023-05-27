@@ -6,8 +6,9 @@
 #include <string>
 
 #include "Signal.hpp"
+#include "Widget.hpp"
 
-class Button {
+class Button : public Widget {
    private:
     Rectangle m_bounds;
     std::string m_text;
@@ -16,6 +17,6 @@ class Button {
    public:
     Button(int x, int y, int width, int height, std::string text);
     Signal<void>& signal_clicked() { return m_signal_clicked; }
-    void process();
+    virtual void process();
     void change_text(std::string new_text);
 };

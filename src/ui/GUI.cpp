@@ -33,6 +33,7 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
 
     m_pause_toggle_button.signal_clicked().connect(
         [this]() { set_paused(!m_paused); });
+    add_widget(m_pause_toggle_button);
 }
 
 GUI::~GUI() {
@@ -40,6 +41,22 @@ GUI::~GUI() {
         UnloadTexture(m_icon_textures[i]);
 
     CloseWindow();
+}
+
+void GUI::process_widgets() {
+    for (auto& w : m_widgets) w.get().process();
+}
+
+void GUI::add_widget(Widget& widget) { m_widgets.emplace_back(widget); }
+
+void GUI::set_paused(bool new_paused) {
+    if (m_paused == new_paused) return;
+    m_paused = new_paused;
+    if (new_paused) {
+        m_pause_toggle_button.change_text("#131#");
+    } else {
+        m_pause_toggle_button.change_text("#132#");
+    }
 }
 
 void GUI::run() {
@@ -50,7 +67,7 @@ void GUI::run() {
 
         BeginDrawing();
         {
-            m_pause_toggle_button.process();
+            process_widgets();
 
             auto& radar_objects = m_radar_system.radar_objects();
             // TODO: actually get the size from terrain
