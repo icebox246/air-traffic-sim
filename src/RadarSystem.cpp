@@ -83,7 +83,7 @@ void RadarSystem::generate_random_mobile_radar_object() {
                      pos.y() > m_terrain.height());
 
             double velocity = (rand() % 15 + 10) / 10.;
-            double altitude = ((rand() % 20) + 10) * 100;
+            double altitude = (rand() & 1) * 100 + 100;
             checkpoints.emplace_back(pos, velocity, altitude);
             last_pos = pos;
         }
