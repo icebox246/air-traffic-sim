@@ -1,5 +1,7 @@
 #include "RadarSystem.hpp"
 
+#include <sstream>
+
 #include "radar_objects/CollisionComputer.hpp"
 #include "radar_objects/Glider.hpp"
 #include "radar_objects/Helicopter.hpp"
@@ -11,8 +13,7 @@
 #include "radar_objects/Windmill.hpp"
 #include "util.hpp"
 
-RadarSystem::RadarSystem() {
-}
+RadarSystem::RadarSystem() {}
 
 bool RadarSystem::change_mobile_object_route(RadarObjectId id,
                                              Route new_route) {
@@ -26,7 +27,48 @@ bool RadarSystem::change_mobile_object_route(RadarObjectId id,
     return false;
 }
 
-void RadarSystem::load_from_string_data(std::string data) { TODO(); }
+void RadarSystem::load_from_string_data(std::string data) {
+    m_radar_objects.clear();
+    std::stringstream ss(data);
+
+    while (!ss.eof()) {
+        std::string command;
+        ss >> command;
+
+        if (command == "terrain") {
+            std::string data;
+            std::string line;
+            while (line != "endterrain\n") {
+                data += line;
+                ss >> line;
+                line += "\n";
+            }
+            m_terrain = Terrain::from_string_data(data);
+        } else if (command == "skyscraper") {
+            double x, y, height;
+            ss >> x >> y >> height;
+            m_radar_objects.emplace_back(
+                std::make_unique<Skyscraper>(RealPosition(x, y), height));
+        } else if (command == "mountain") {
+            double x, y, height;
+            ss >> x >> y >> height;
+            m_radar_objects.emplace_back(
+                std::make_unique<Mountain>(RealPosition(x, y), height));
+        } else if (command == "windmill") {
+            double x, y, height;
+            ss >> x >> y >> height;
+            m_radar_objects.emplace_back(
+                std::make_unique<Windmill>(RealPosition(x, y), height));
+        } else if (command == "mobiles") {
+            size_t n;
+            ss >> n;
+            for (auto i = 0; i < n; i++) generate_random_mobile_radar_object();
+        } else {
+            std::cerr << "[WARN] Unknown command during file load: " << command
+                      << std::endl;
+        }
+    }
+}
 
 void RadarSystem::process(double delta_time) {
     int erased_count = 0;
