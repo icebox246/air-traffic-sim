@@ -10,6 +10,7 @@
 #include "../RadarSystem.hpp"
 #include "../radar_objects/RadarObject.hpp"
 #include "Button.hpp"
+#include "FileSelector.hpp"
 #include "RadarView.hpp"
 #include "RouteEditor.hpp"
 #include "Signal.hpp"
@@ -28,14 +29,22 @@ class GUI {
     RouteEditor m_route_editor;
     WarningList m_warning_list;
     WarningView m_warning_view;
+    FileSelector m_file_selector;
 
     void process_widgets();
     void add_widget(Widget& widget);
     void set_paused(bool new_paused);
 
+    static bool m_error_box_visible;
+    static std::string m_error_box_message;
+    void process_error_box();
+
    public:
     GUI(std::string title, RadarSystem& radar_system);
     ~GUI();
+
+    static void show_error_box(std::string message);
+    static void hide_error_box();
 
     void run();
 };

@@ -28,7 +28,14 @@ HEADERS += src/radar_objects/Helicopter.hpp
 HEADERS += src/radar_objects/Glider.hpp
 HEADERS += src/radar_objects/HotAirBalloon.hpp
 
+SOURCES += src/terrain/Terrain.cpp
 HEADERS += src/terrain/Terrain.hpp
+HEADERS += src/terrain/TerrainTile.hpp
+HEADERS += src/terrain/TerrainTileKind.hpp
+HEADERS += src/terrain/MeadowTerrainTile.hpp
+HEADERS += src/terrain/MountainsTerrainTile.hpp
+HEADERS += src/terrain/UrbanTerrainTile.hpp
+HEADERS += src/terrain/WaterTerrainTile.hpp
 
 HEADERS += src/warnings/Warning.hpp
 SOURCES += src/warnings/ProximityWarning.cpp
@@ -54,6 +61,8 @@ SOURCES += src/ui/WarningList.cpp
 HEADERS += src/ui/WarningList.hpp
 SOURCES += src/ui/WarningView.cpp
 HEADERS += src/ui/WarningView.hpp
+SOURCES += src/ui/FileSelector.cpp
+HEADERS += src/ui/FileSelector.hpp
 
 HEADERS += src/ui/Signal.hpp
 

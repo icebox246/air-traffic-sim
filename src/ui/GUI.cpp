@@ -15,7 +15,9 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
       m_warning_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_route_editor(0, 0, HEIGHT, HEIGHT, HEIGHT, 40, WIDTH - HEIGHT, 200,
                      radar_system),
-      m_warning_list(HEIGHT, 248, WIDTH - HEIGHT, HEIGHT - 248, radar_system)
+      m_warning_list(HEIGHT, 248, WIDTH - HEIGHT, HEIGHT - 248 - 40,
+                     radar_system),
+      m_file_selector(HEIGHT, HEIGHT - 32, WIDTH - HEIGHT, 32)
 
 {
     InitWindow(WIDTH, HEIGHT, title.c_str());
@@ -59,6 +61,15 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
     add_widget(m_route_editor);
 
     add_widget(m_warning_list);
+
+    m_file_selector.signal_file_selected().connect([&](std::string filename) {
+        auto* raw_data = LoadFileText(filename.c_str());
+        std::string data = std::string(raw_data);
+        UnloadFileText(raw_data);
+
+        m_radar_system.load_from_string_data(data);
+    });
+    add_widget(m_file_selector);
 }
 
 GUI::~GUI() { CloseWindow(); }
@@ -89,8 +100,32 @@ void GUI::run() {
         BeginDrawing();
         {
             process_widgets();
+            process_error_box();
             ClearBackground(RAYWHITE);
         }
         EndDrawing();
     }
 }
+
+bool GUI::m_error_box_visible = false;
+std::string GUI::m_error_box_message = "";
+
+void GUI::process_error_box() {
+    if (m_error_box_visible) {
+        Rectangle bounds;
+        bounds.width = 200;
+        bounds.height = 100;
+        bounds.x = WIDTH * 0.5 - bounds.width * 0.5;
+        bounds.y = HEIGHT * 0.5 - bounds.height * 0.5;
+
+        if (GuiMessageBox(bounds, "Error", (m_error_box_message + ";").c_str(),
+                          "OK") == 1) {
+            hide_error_box();
+        }
+    }
+}
+void GUI::show_error_box(std::string message) {
+    m_error_box_visible = true;
+    m_error_box_message = message;
+}
+void GUI::hide_error_box() { m_error_box_visible = false; }
