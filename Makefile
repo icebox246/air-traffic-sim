@@ -48,6 +48,8 @@ SOURCES += src/ui/RadarView.cpp
 HEADERS += src/ui/RadarView.hpp
 SOURCES += src/ui/RouteEditor.cpp
 HEADERS += src/ui/RouteEditor.hpp
+SOURCES += src/ui/WarningList.cpp
+HEADERS += src/ui/WarningList.hpp
 
 HEADERS += src/ui/Signal.hpp
 

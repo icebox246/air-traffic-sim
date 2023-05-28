@@ -13,7 +13,10 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
       m_pause_toggle_button(HEIGHT, 0, 32, 32, "#132#"),
       m_radar_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_route_editor(0, 0, HEIGHT, HEIGHT, HEIGHT, 40, WIDTH - HEIGHT, 200,
-                     radar_system) {
+                     radar_system),
+      m_warning_list(HEIGHT, 248, WIDTH - HEIGHT, HEIGHT - 248, radar_system)
+
+{
     InitWindow(WIDTH, HEIGHT, title.c_str());
     SetTargetFPS(60);
 
@@ -51,6 +54,8 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
     m_route_editor.signal_cancelled().connect(
         [this](RadarObjectId obj_id) { set_paused(false); });
     add_widget(m_route_editor);
+
+    add_widget(m_warning_list);
 }
 
 GUI::~GUI() { CloseWindow(); }

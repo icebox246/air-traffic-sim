@@ -13,10 +13,11 @@
 #include "RadarView.hpp"
 #include "RouteEditor.hpp"
 #include "Signal.hpp"
+#include "WarningList.hpp"
 
 class GUI {
    private:
-    static const size_t WIDTH = 1000;
+    static const size_t WIDTH = 1200;
     static const size_t HEIGHT = 800;
     std::vector<std::reference_wrapper<Widget>> m_widgets;
     RadarSystem& m_radar_system;
@@ -24,6 +25,7 @@ class GUI {
     Button m_pause_toggle_button;
     RadarView m_radar_view;
     RouteEditor m_route_editor;
+    WarningList m_warning_list;
 
     void process_widgets();
     void add_widget(Widget& widget);
