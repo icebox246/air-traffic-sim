@@ -77,7 +77,10 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
     add_widget(m_file_selector);
 }
 
-GUI::~GUI() { CloseWindow(); }
+GUI::~GUI() {
+    m_radar_view.unload_textures();
+    CloseWindow();
+}
 
 void GUI::process_widgets() {
     for (auto& w : m_widgets)

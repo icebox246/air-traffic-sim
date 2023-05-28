@@ -34,9 +34,13 @@ void RadarView::load_textures() {
         SetTextureFilter(m_icon_textures[i], TEXTURE_FILTER_BILINEAR);
 }
 
+void RadarView::unload_textures() {
+    for (auto i = 0; i < (size_t)RadarObjectKind::CountKinds; i++)
+        UnloadTexture(m_icon_textures[i]);
+}
+
 void RadarView::process() {
     auto& radar_objects = m_radar_system.radar_objects();
-    // TODO: actually get the size from terrain
     auto sx = m_radar_system.terrain().width();
     auto sy = m_radar_system.terrain().height();
 
@@ -94,3 +98,4 @@ void RadarView::process() {
         }
     }
 }
+
