@@ -9,6 +9,7 @@
 #include "../radar_objects/MobileRadarObject.hpp"
 #include "../radar_objects/RouteCheckpoint.hpp"
 #include "Button.hpp"
+#include "Label.hpp"
 #include "RealField.hpp"
 #include "Signal.hpp"
 #include "Widget.hpp"
@@ -19,6 +20,9 @@ class RouteEditor : public Widget {
 
     Rectangle m_radar_bounds;
     Rectangle m_props_bounds;
+
+    Label m_velocity_label;
+    Label m_altitude_label;
 
     RealField m_velocity_field;
     RealField m_altitude_field;

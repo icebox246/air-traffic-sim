@@ -1,5 +1,6 @@
 #include "RadarSystem.hpp"
 
+#include "radar_objects/CollisionComputer.hpp"
 #include "radar_objects/Glider.hpp"
 #include "radar_objects/Helicopter.hpp"
 #include "radar_objects/HotAirBalloon.hpp"
@@ -55,6 +56,20 @@ void RadarSystem::process(double delta_time) {
     for (auto i = 0; i < erased_count; i++) {
         generate_random_mobile_radar_object();
     }
+
+    m_warnings.clear();
+
+    for (auto i = 0; i < m_radar_objects.size(); i++) {
+        for (auto j = i + 1; j < m_radar_objects.size(); j++) {
+            // TODO: parameterize proximity warning threshold
+            CollisionComputer cc(*m_radar_objects[i], *m_radar_objects[j], 4);
+
+            if (!cc.should_warn()) continue;
+
+            auto warning = cc.generate_warning();
+            m_warnings.push_back(std::move(warning));
+        }
+    }
 }
 
 void RadarSystem::generate_random_mobile_radar_object() {
@@ -83,7 +98,7 @@ void RadarSystem::generate_random_mobile_radar_object() {
                      pos.y() > m_terrain.height());
 
             double velocity = (rand() % 15 + 10) / 10.;
-            double altitude = ((rand() % 20) + 10) * 100;
+            double altitude = (rand() & 1) * 100 + 100;
             checkpoints.emplace_back(pos, velocity, altitude);
             last_pos = pos;
         }

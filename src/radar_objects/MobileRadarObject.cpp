@@ -2,7 +2,7 @@
 
 #include "../util.hpp"
 
-RealPosition MobileRadarObject::position_after(double delta_time) {
+RealPosition MobileRadarObject::position_after(double delta_time) const {
     auto& checkpoints = m_route.checkpoints();
     auto position = m_position;
 

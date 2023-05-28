@@ -17,11 +17,13 @@ class RadarSystem {
 
    public:
     RadarSystem();
-    std::vector<std::unique_ptr<RadarObject>>& radar_objects() {
+    std::vector<std::unique_ptr<RadarObject>> const& radar_objects() const {
         return m_radar_objects;
     }
-    std::vector<std::unique_ptr<Warning>>& warnings() { return m_warnings; }
-    Terrain& terrain() { return m_terrain; }
+    std::vector<std::unique_ptr<Warning>> const& warnings() const {
+        return m_warnings;
+    }
+    Terrain const& terrain() const { return m_terrain; }
 
     bool change_mobile_object_route(RadarObjectId id, Route new_route);
     void load_from_string_data(std::string data);

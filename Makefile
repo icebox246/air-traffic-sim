@@ -14,6 +14,8 @@ HEADERS += src/radar_objects/RadarObjectId.hpp
 HEADERS += src/radar_objects/RadarObjectKind.hpp
 HEADERS += src/radar_objects/Route.hpp
 SOURCES += src/radar_objects/Route.cpp
+HEADERS += src/radar_objects/CollisionComputer.hpp
+SOURCES += src/radar_objects/CollisionComputer.cpp
 HEADERS += src/radar_objects/RouteCheckpoint.hpp
 HEADERS += src/radar_objects/ImmobileRadarObject.hpp
 HEADERS += src/radar_objects/Skyscraper.hpp
@@ -29,9 +31,15 @@ HEADERS += src/radar_objects/HotAirBalloon.hpp
 HEADERS += src/terrain/Terrain.hpp
 
 HEADERS += src/warnings/Warning.hpp
+SOURCES += src/warnings/ProximityWarning.cpp
+HEADERS += src/warnings/ProximityWarning.hpp
+SOURCES += src/warnings/CollisionWarning.cpp
+HEADERS += src/warnings/CollisionWarning.hpp
 
 SOURCES += src/ui/GUI.cpp
 HEADERS += src/ui/GUI.hpp
+SOURCES += src/ui/Label.cpp
+HEADERS += src/ui/Label.hpp
 SOURCES += src/ui/Button.cpp
 HEADERS += src/ui/Button.hpp
 SOURCES += src/ui/TextField.cpp
@@ -42,6 +50,10 @@ SOURCES += src/ui/RadarView.cpp
 HEADERS += src/ui/RadarView.hpp
 SOURCES += src/ui/RouteEditor.cpp
 HEADERS += src/ui/RouteEditor.hpp
+SOURCES += src/ui/WarningList.cpp
+HEADERS += src/ui/WarningList.hpp
+SOURCES += src/ui/WarningView.cpp
+HEADERS += src/ui/WarningView.hpp
 
 HEADERS += src/ui/Signal.hpp
 

@@ -6,5 +6,5 @@ class Mountain : public ImmobileRadarObject {
    public:
     Mountain(RealPosition position, double height)
         : ImmobileRadarObject(position, height) {}
-    virtual RadarObjectKind kind() { return RadarObjectKind::Mountain; }
+    virtual RadarObjectKind kind() const { return RadarObjectKind::Mountain; }
 };
