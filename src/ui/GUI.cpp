@@ -11,6 +11,7 @@
 GUI::GUI(std::string title, RadarSystem& radar_system)
     : m_radar_system(radar_system),
       m_pause_toggle_button(HEIGHT, 0, 32, 32, "#132#"),
+      m_terrain_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_radar_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_warning_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_route_editor(0, 0, HEIGHT, HEIGHT, HEIGHT, 40, WIDTH - HEIGHT, 200,
@@ -32,6 +33,8 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
         set_paused(!m_paused);
     });
     add_widget(m_pause_toggle_button);
+
+    add_widget(m_terrain_view);
 
     m_radar_view.load_textures();
     m_radar_view.signal_radar_object_clicked().connect(

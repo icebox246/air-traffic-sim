@@ -9,5 +9,6 @@ class TerrainTile {
     TerrainTile(IntegerPosition position) : m_position(position) {}
 
    public:
+    IntegerPosition position() const { return m_position; }
     virtual TerrainTileKind kind() const = 0;
 };
