@@ -14,7 +14,7 @@ WarningKind ProximityWarning::kind() const { return WarningKind::Proximity; };
 std::string ProximityWarning::message() const {
     std::stringstream ss;
     ss << "#" << m_id1 << " & #" << std::to_string(m_id2)
-       << " dangerously close at " << std::setprecision(2) << m_distance
+       << " dangerously close at "<< std::fixed << std::setprecision(1)  << m_distance
        << " (in " << std::setprecision(1) << m_time << "s)";
     return ss.str();
 }

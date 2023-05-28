@@ -62,7 +62,7 @@ void RadarSystem::process(double delta_time) {
     for (auto i = 0; i < m_radar_objects.size(); i++) {
         for (auto j = i + 1; j < m_radar_objects.size(); j++) {
             // TODO: parameterize proximity warning threshold
-            CollisionComputer cc(*m_radar_objects[i], *m_radar_objects[j], 1.5);
+            CollisionComputer cc(*m_radar_objects[i], *m_radar_objects[j], 4);
 
             if (!cc.should_warn()) continue;
 

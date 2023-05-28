@@ -33,6 +33,8 @@ HEADERS += src/terrain/Terrain.hpp
 HEADERS += src/warnings/Warning.hpp
 SOURCES += src/warnings/ProximityWarning.cpp
 HEADERS += src/warnings/ProximityWarning.hpp
+SOURCES += src/warnings/CollisionWarning.cpp
+HEADERS += src/warnings/CollisionWarning.hpp
 
 SOURCES += src/ui/GUI.cpp
 HEADERS += src/ui/GUI.hpp
