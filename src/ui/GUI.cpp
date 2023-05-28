@@ -7,6 +7,7 @@
 
 #define RAYGUI_IMPLEMENTATION
 #include <raygui.h>
+#include <styles/dark/dark.h>
 
 GUI::GUI(std::string title, RadarSystem& radar_system)
     : m_radar_system(radar_system),
@@ -23,6 +24,7 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
 {
     InitWindow(WIDTH, HEIGHT, title.c_str());
     SetTargetFPS(60);
+    GuiLoadStyleDark();
 
     m_pause_toggle_button.signal_clicked().connect([this]() {
         if (m_paused && m_route_editor.visible()) {
@@ -104,7 +106,7 @@ void GUI::run() {
         {
             process_widgets();
             process_error_box();
-            ClearBackground(RAYWHITE);
+            ClearBackground(GetColor(0x3C3C3Cff));
         }
         EndDrawing();
     }
