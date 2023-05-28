@@ -1,5 +1,7 @@
 #include "ProximityWarning.hpp"
 
+#include <iomanip>
+#include <sstream>
 #include <string>
 
 ProximityWarning::ProximityWarning(RealPosition point, RadarObjectId id1,
@@ -10,7 +12,9 @@ ProximityWarning::ProximityWarning(RealPosition point, RadarObjectId id1,
 WarningKind ProximityWarning::kind() const { return WarningKind::Proximity; };
 
 std::string ProximityWarning::message() const {
-    return "#" + std::to_string(m_id1) + " & #" + std::to_string(m_id2) +
-           " dangerously close at " + std::to_string(m_distance) + " (in " +
-           std::to_string(m_time) + "s)";
-};
+    std::stringstream ss;
+    ss << "#" << m_id1 << " & #" << std::to_string(m_id2)
+       << " dangerously close at " << std::setprecision(2) << m_distance
+       << " (in " << std::setprecision(1) << m_time << "s)";
+    return ss.str();
+}
