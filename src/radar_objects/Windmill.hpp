@@ -6,5 +6,5 @@ class Windmill : public ImmobileRadarObject {
    public:
     Windmill(RealPosition position, double height)
         : ImmobileRadarObject(position, height) {}
-    virtual RadarObjectKind kind() { return RadarObjectKind::Windmill; }
+    virtual RadarObjectKind kind() const { return RadarObjectKind::Windmill; }
 };

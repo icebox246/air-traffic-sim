@@ -6,5 +6,7 @@ class HotAirBalloon : public MobileRadarObject {
    public:
     HotAirBalloon(RealPosition position, Route route)
         : MobileRadarObject(position, route) {}
-    virtual RadarObjectKind kind() { return RadarObjectKind::HotAirBalloon; }
+    virtual RadarObjectKind kind() const {
+        return RadarObjectKind::HotAirBalloon;
+    }
 };

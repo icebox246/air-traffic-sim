@@ -6,5 +6,5 @@ class Skyscraper : public ImmobileRadarObject {
    public:
     Skyscraper(RealPosition position, double height)
         : ImmobileRadarObject(position, height) {}
-    virtual RadarObjectKind kind() { return RadarObjectKind::Skyscraper; }
+    virtual RadarObjectKind kind() const { return RadarObjectKind::Skyscraper; }
 };
