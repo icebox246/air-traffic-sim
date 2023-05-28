@@ -12,8 +12,12 @@ RouteEditor::RouteEditor(int radar_x, int radar_y, int radar_width,
                          int props_width, int props_height,
                          RadarSystem& radar_system)
     : m_radar_system(radar_system),
+      m_velocity_label(props_x + 8, props_y + 8, props_width - 16, 24,
+                       "velocity:"),
       m_velocity_field(props_x + 8, props_y + 8 + 24 + 4, props_width - 16, 24,
                        32),
+      m_altitude_label(props_x + 8, props_y + 8 + 24 + 4 + 24 + 8,
+                       props_width - 16, 24, "altitude:"),
       m_altitude_field(props_x + 8, props_y + 8 + 24 + 4 + 24 + 8 + 24 + 4,
                        props_width - 16, 24, 32),
       m_finish_button(props_x + 8,
@@ -97,14 +101,12 @@ void RouteEditor::process() {
     rec.width = m_props_bounds.width - 16;
     rec.height = 24;
 
-    GuiLabel(rec, "velocity:");
-    rec.y += rec.height + 4;
+    m_velocity_label.process();
     m_velocity_field.process();
-    rec.y += rec.height + 8;
-    GuiLabel(rec, "altitude:");
-    rec.y += rec.height + 4;
+
+    m_altitude_label.process();
     m_altitude_field.process();
-    rec.y += rec.height + 8;
+
     m_finish_button.process();
     m_cancel_button.process();
 
