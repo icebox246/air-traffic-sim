@@ -60,6 +60,7 @@ HEADERS += src/ui/Signal.hpp
 CFLAGS += -Ithirdparty/
 CFLAGS += `pkg-config --cflags raylib`
 CFLAGS += -g
+CFLAGS += -Wno-enum-compare
 
 LIBS += `pkg-config --libs raylib`
 
