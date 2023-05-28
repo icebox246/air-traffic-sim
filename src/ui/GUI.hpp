@@ -14,6 +14,7 @@
 #include "RouteEditor.hpp"
 #include "Signal.hpp"
 #include "WarningList.hpp"
+#include "WarningView.hpp"
 
 class GUI {
    private:
@@ -26,6 +27,7 @@ class GUI {
     RadarView m_radar_view;
     RouteEditor m_route_editor;
     WarningList m_warning_list;
+    WarningView m_warning_view;
 
     void process_widgets();
     void add_widget(Widget& widget);

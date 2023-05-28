@@ -18,6 +18,9 @@ class Warning {
 
    public:
     RealPosition point() const { return m_point; }
+    std::string short_message() const {
+        return "#" + std::to_string(m_id1) + " & #" + std::to_string(m_id2);
+    }
     virtual WarningKind kind() const = 0;
     virtual std::string message() const = 0;
 };

@@ -50,6 +50,8 @@ SOURCES += src/ui/RouteEditor.cpp
 HEADERS += src/ui/RouteEditor.hpp
 SOURCES += src/ui/WarningList.cpp
 HEADERS += src/ui/WarningList.hpp
+SOURCES += src/ui/WarningView.cpp
+HEADERS += src/ui/WarningView.hpp
 
 HEADERS += src/ui/Signal.hpp
 

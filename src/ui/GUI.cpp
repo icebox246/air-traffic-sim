@@ -12,6 +12,7 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
     : m_radar_system(radar_system),
       m_pause_toggle_button(HEIGHT, 0, 32, 32, "#132#"),
       m_radar_view(0, 0, HEIGHT, HEIGHT, radar_system),
+      m_warning_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_route_editor(0, 0, HEIGHT, HEIGHT, HEIGHT, 40, WIDTH - HEIGHT, 200,
                      radar_system),
       m_warning_list(HEIGHT, 248, WIDTH - HEIGHT, HEIGHT - 248, radar_system)
@@ -45,6 +46,8 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
             }
         });
     add_widget(m_radar_view);
+
+    add_widget(m_warning_view);
 
     m_route_editor.signal_finished().connect([this](RadarObjectId obj_id) {
         m_radar_system.change_mobile_object_route(obj_id,
