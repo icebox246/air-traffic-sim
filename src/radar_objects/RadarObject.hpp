@@ -8,7 +8,7 @@ class RadarObject {
    protected:
     RadarObjectId m_id;
     RealPosition m_position;
-    double m_radius;
+    double m_radius = 0.25;
 
     RadarObject(RealPosition position)
         : m_id(m_next_id++), m_position(position) {}
