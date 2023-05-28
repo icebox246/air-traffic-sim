@@ -10,6 +10,7 @@ class ImmobileRadarObject : public RadarObject {
         : RadarObject(position), m_height(height) {}
 
    public:
+    virtual ~ImmobileRadarObject() {}
     virtual RealPosition position_after(double delta_time) const {
         return position();
     }

@@ -6,10 +6,11 @@
 class MobileRadarObject : public RadarObject {
    protected:
     Route m_route;
-
-   public:
     MobileRadarObject(RealPosition position, Route route)
         : RadarObject(position), m_route(route) {}
+
+   public:
+    virtual ~MobileRadarObject() {}
     Route const& route() const { return m_route; }
     void change_route(Route new_route) { m_route = new_route; }
     virtual RealPosition position_after(double delta_time) const;

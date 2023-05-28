@@ -17,6 +17,7 @@ class RadarObject {
     static RadarObjectId m_next_id;
 
    public:
+    virtual ~RadarObject() {}
     RadarObjectId id() const { return m_id; }
     RealPosition position() const { return m_position; }
     double radius() const { return m_radius; }
