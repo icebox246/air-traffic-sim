@@ -98,4 +98,3 @@ void RadarView::process() {
         }
     }
 }
-
