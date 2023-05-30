@@ -1,3 +1,9 @@
 sim
 compile_flags.txt
 .obj
+web/
+
+# You have to provide those by yourself
+thirdparty/raylib.h
+thirdparty/libraylib.a
+

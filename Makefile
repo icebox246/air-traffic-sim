@@ -82,9 +82,28 @@ sim: ${OBJECTS} ${HEADERS}
 
 dev: compile_flags.txt
 
+web: web/index.html
+
 compile_flags.txt:
 	echo ${CFLAGS} | tr ' ' '\n' > $@
 
 .obj/%.o: src/%.cpp
 	[ -d `dirname $@` ] || mkdir -p `dirname $@`
 	$(CXX) -c $< ${CFLAGS} -o $@
+
+EMFLAGS += -Os
+EMFLAGS += ${CFLAGS}
+EMFLAGS += -s WASM=1
+EMFLAGS += -s USE_GLFW=3
+EMFLAGS += -s ASYNCIFY
+EMFLAGS += -s TOTAL_MEMORY=1024MB
+EMFLAGS += --preload-file resources
+EMFLAGS += --shell-file src/shell_minimal.html
+
+web/index.html: ${SOURCES} ${HEADERS} thirdparty/libraylib.a
+	[ -d web ] || mkdir web
+	emcc -o $@ ${SOURCES} thirdparty/libraylib.a  ${EMFLAGS}
+
+thirdparty/libraylib.a:
+	[ -f $@ ] || echo "[Error] You must provide thirdparty/libraylib.a for web build!!!" || exit 1 
+

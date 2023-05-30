@@ -6,7 +6,7 @@
 
 Requirements:
 
-- `raylib`
+- `raylib` (installed globally preferably)
 - `g++`
 - `make`
 - `clang-format`
@@ -15,6 +15,25 @@ Requirements:
 make dev
 make
 ./sim
+```
+
+## Web build
+
+To build for web you need to provide compiled raylib archive in
+`thirdparty/libraylib.a` ([guide](http://localhost:3000)). Also because of
+weird clang include priority it is best to provide `raylib.h` in
+`thirdparty/raylib.h` (usually can be found in `/usr/include`).
+
+Requirements:
+
+- files mentioned above
+- `emscripten` (`emcc` should be visible in `$PATH`)
+- `make`
+- some web server (`emrun` can be used)
+
+```console
+make web
+emrun web
 ```
 
 ## Credits
