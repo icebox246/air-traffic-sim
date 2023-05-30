@@ -21,8 +21,8 @@ void TerrainView::process() {
     double tile_size = m_bounds.width / sx;
     double radius = tile_size / 2 * 1.7;
 
-    BeginScissorMode((int)m_bounds.x, (int)m_bounds.y, (int)m_bounds.width,
-                     (int)m_bounds.height);
+    BeginScissorMode(m_bounds.x, m_bounds.y, m_bounds.width,
+                     m_bounds.height);
     for (auto const& tile : tiles) {
         auto tpos = tile->position();
         Vector2 center;

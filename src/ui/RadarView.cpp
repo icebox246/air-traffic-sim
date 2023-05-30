@@ -44,6 +44,7 @@ void RadarView::process() {
     auto sx = m_radar_system.terrain().width();
     auto sy = m_radar_system.terrain().height();
 
+    BeginScissorMode(m_bounds.x, m_bounds.y, m_bounds.width, m_bounds.height);
     for (auto& ro : radar_objects) {
         RealPosition pos = ro->position();
         float texture_scale = 0.4;
@@ -81,6 +82,7 @@ void RadarView::process() {
         DrawText(("#" + std::to_string(ro->id())).c_str(), x, y + 32, 10,
                  BLACK);
     }
+    EndScissorMode();
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         auto mouse_x = GetMouseX();
