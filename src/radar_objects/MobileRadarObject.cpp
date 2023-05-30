@@ -39,6 +39,31 @@ RealPosition MobileRadarObject::position_after(double delta_time) const {
     return position.moved(dx, dy);
 }
 
+double MobileRadarObject::altitude_after(double delta_time) const {
+    auto& checkpoints = m_route.checkpoints();
+    auto position = m_position;
+    auto altitude = m_route.altitude();
+
+    auto time_to_point = [&](RouteCheckpoint const& checkpoint) {
+        return position.distance_from(checkpoint.point()) /
+               checkpoint.velocity();
+    };
+
+    auto current_point = checkpoints.begin();
+    {
+        double t;
+        while (current_point != checkpoints.end() &&
+               (t = time_to_point(*current_point)) <= delta_time) {
+            position = current_point->point();
+            altitude = current_point->altitude();
+            current_point++;
+            delta_time -= t;
+        }
+    }
+
+    return altitude;
+}
+
 void MobileRadarObject::process(double delta_time) {
     while (time_to_checkpoint() <= delta_time) {
         delta_time -= time_to_checkpoint();

@@ -144,7 +144,7 @@ void RadarSystem::generate_random_mobile_radar_object() {
             pos = RealPosition((rand() / (double)RAND_MAX) * m_terrain.width(),
                                (rand() & 1) * int(m_terrain.height() + 2) - 1);
         double velocity = (rand() % 15 + 10) / 10.;
-        double altitude = ((rand() % 20) + 10) * 100;
+        double altitude = (rand() & 1) * 100 + 100;
         checkpoints.emplace_back(pos, velocity, altitude);
     }
 

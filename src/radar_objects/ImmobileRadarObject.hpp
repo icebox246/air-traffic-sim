@@ -14,7 +14,7 @@ class ImmobileRadarObject : public RadarObject {
     virtual RealPosition position_after(double delta_time) const {
         return position();
     }
-    virtual double upper_bound() const { return m_height; };
-    virtual double lower_bound() const { return 0; };
+    virtual double upper_bound(double delta_time) const { return m_height; };
+    virtual double lower_bound(double delta_time) const { return 0; };
     virtual void process(double delta_time) {}
 };

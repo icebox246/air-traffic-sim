@@ -23,11 +23,29 @@ CollisionComputer::CollisionComputer(RadarObject const& obj1,
         return;
     }
 
+    auto bounds_overlap = [](double lower_a, double upper_a, double lower_b,
+                             double upper_b) {
+        ASSERT(lower_a < upper_a);
+        ASSERT(lower_b < upper_b);
+        return (lower_a <= lower_b && lower_b <= upper_a) ||
+               (lower_a <= upper_b && upper_b <= upper_a) ||
+               (lower_b <= lower_a && lower_a <= upper_b) ||
+               (lower_b <= upper_a && upper_a <= upper_b);
+    };
+
     for (double dt = 0.; dt <= 10.; dt += 0.1) {
         auto p1 = obj1.position_after(dt);
         auto p2 = obj2.position_after(dt);
+        auto l1 = obj1.lower_bound(dt);
+        auto u1 = obj1.upper_bound(dt);
+        auto l2 = obj2.lower_bound(dt);
+        auto u2 = obj2.upper_bound(dt);
         double dist = p1.distance_from(p2);
-        if (dist <= obj1.radius() + obj2.radius()) {
+        if (u1 > 300 && dist < 1)
+            std::cerr << l1 << " " << u1 << " " << l2 << " " << u2 << " " << dist
+                      << std::endl;
+        if (bounds_overlap(l1, u1, l2, u2) &&
+            dist <= obj1.radius() + obj2.radius()) {
             m_time = dt;
             m_distance = 0;
             m_point =
