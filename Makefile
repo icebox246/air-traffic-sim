@@ -71,6 +71,7 @@ HEADERS += src/ui/Signal.hpp
 CFLAGS += -Ithirdparty/
 CFLAGS += `pkg-config --cflags raylib`
 CFLAGS += -g
+CFLAGS += -O2
 
 WCFLAGS += -Wall
 WCFLAGS += -Werror
@@ -108,7 +109,7 @@ EMFLAGS += --shell-file src/shell_minimal.html
 
 web/index.html: ${SOURCES} ${HEADERS} thirdparty/libraylib.a
 	[ -d web ] || mkdir web
-	emcc -o $@ ${SOURCES} thirdparty/libraylib.a  ${EMFLAGS}
+	emcc -o $@ ${SOURCES} thirdparty/raygui.cpp thirdparty/libraylib.a  ${EMFLAGS}
 
 thirdparty/libraylib.a:
 	[ -f $@ ] || echo "[Error] You must provide thirdparty/libraylib.a for web build!!!" || exit 1 
