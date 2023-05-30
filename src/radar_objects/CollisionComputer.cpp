@@ -41,9 +41,6 @@ CollisionComputer::CollisionComputer(RadarObject const& obj1,
         auto l2 = obj2.lower_bound(dt);
         auto u2 = obj2.upper_bound(dt);
         double dist = p1.distance_from(p2);
-        if (u1 > 300 && dist < 1)
-            std::cerr << l1 << " " << u1 << " " << l2 << " " << u2 << " " << dist
-                      << std::endl;
         if (bounds_overlap(l1, u1, l2, u2) &&
             dist <= obj1.radius() + obj2.radius()) {
             m_time = dt;
