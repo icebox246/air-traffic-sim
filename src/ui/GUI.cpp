@@ -7,19 +7,24 @@
 
 #define RAYGUI_IMPLEMENTATION
 #include <raygui.h>
+#include <styles/dark/dark.h>
 
 GUI::GUI(std::string title, RadarSystem& radar_system)
     : m_radar_system(radar_system),
       m_pause_toggle_button(HEIGHT, 0, 32, 32, "#132#"),
+      m_terrain_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_radar_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_warning_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_route_editor(0, 0, HEIGHT, HEIGHT, HEIGHT, 40, WIDTH - HEIGHT, 200,
                      radar_system),
-      m_warning_list(HEIGHT, 248, WIDTH - HEIGHT, HEIGHT - 248, radar_system)
+      m_warning_list(HEIGHT, 248, WIDTH - HEIGHT, HEIGHT - 248 - 40,
+                     radar_system),
+      m_file_selector(HEIGHT, HEIGHT - 32, WIDTH - HEIGHT, 32)
 
 {
     InitWindow(WIDTH, HEIGHT, title.c_str());
     SetTargetFPS(60);
+    GuiLoadStyleDark();
 
     m_pause_toggle_button.signal_clicked().connect([this]() {
         if (m_paused && m_route_editor.visible()) {
@@ -30,6 +35,8 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
         set_paused(!m_paused);
     });
     add_widget(m_pause_toggle_button);
+
+    add_widget(m_terrain_view);
 
     m_radar_view.load_textures();
     m_radar_view.signal_radar_object_clicked().connect(
@@ -59,9 +66,21 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
     add_widget(m_route_editor);
 
     add_widget(m_warning_list);
+
+    m_file_selector.signal_file_selected().connect([&](std::string filename) {
+        auto* raw_data = LoadFileText(filename.c_str());
+        std::string data = std::string(raw_data);
+        UnloadFileText(raw_data);
+
+        m_radar_system.load_from_string_data(data);
+    });
+    add_widget(m_file_selector);
 }
 
-GUI::~GUI() { CloseWindow(); }
+GUI::~GUI() {
+    m_radar_view.unload_textures();
+    CloseWindow();
+}
 
 void GUI::process_widgets() {
     for (auto& w : m_widgets)
@@ -88,9 +107,33 @@ void GUI::run() {
 
         BeginDrawing();
         {
+            ClearBackground(GetColor(0x3C3C3Cff));
             process_widgets();
-            ClearBackground(RAYWHITE);
+            process_error_box();
         }
         EndDrawing();
     }
 }
+
+bool GUI::m_error_box_visible = false;
+std::string GUI::m_error_box_message = "";
+
+void GUI::process_error_box() {
+    if (m_error_box_visible) {
+        Rectangle bounds;
+        bounds.width = 200;
+        bounds.height = 100;
+        bounds.x = WIDTH * 0.5 - bounds.width * 0.5;
+        bounds.y = HEIGHT * 0.5 - bounds.height * 0.5;
+
+        if (GuiMessageBox(bounds, "Error", (m_error_box_message + ";").c_str(),
+                          "OK") == 1) {
+            hide_error_box();
+        }
+    }
+}
+void GUI::show_error_box(std::string message) {
+    m_error_box_visible = true;
+    m_error_box_message = message;
+}
+void GUI::hide_error_box() { m_error_box_visible = false; }

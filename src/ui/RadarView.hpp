@@ -15,14 +15,10 @@ class RadarView : public Widget {
 
    public:
     RadarView(int x, int y, int width, int height, RadarSystem& radar_system);
-    ~RadarView() {
-        // TODO: should probably unload those but here isn't a great place
-        /* for (auto i = 0; i < (size_t)RadarObjectKind::CountKinds; i++) */
-        /*     UnloadTexture(m_icon_textures[i]); */
-    }
     Signal<void, RadarObjectId>& signal_radar_object_clicked() {
         return m_signal_radar_object_clicked;
     }
     void load_textures();
+    void unload_textures();
     virtual void process();
 };

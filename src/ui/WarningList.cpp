@@ -31,6 +31,8 @@ void WarningList::process() {
     // TODO: fix scrolling
     // Currently cutting off non-visible elements from scroll view is not
     // working. I tried using scissor mode but it failed to work.
+    BeginScissorMode(m_bounds.x, m_bounds.y + 24, m_bounds.width,
+                     m_bounds.height - 32);
     {
         for (auto const& w : warnings) {
             Color color;
@@ -46,6 +48,7 @@ void WarningList::process() {
             label_rec.y += label_rec.height;
         }
     }
+    EndScissorMode();
 
     GuiSetStyle(LABEL, TEXT_COLOR_NORMAL, DEFAULT);
 }

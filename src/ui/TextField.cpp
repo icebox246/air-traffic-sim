@@ -26,8 +26,12 @@ void TextField::set_text(std::string new_text) {
 }
 
 void TextField::process() {
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) &&
-        CheckCollisionPointRec(GetMousePosition(), m_bounds))
-        m_selected_id = m_id;
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        if (CheckCollisionPointRec(GetMousePosition(), m_bounds)) {
+            m_selected_id = m_id;
+        } else if (m_selected_id == m_id) {
+            m_selected_id = -1;
+        }
+    }
     GuiTextBox(m_bounds, &m_buffer[0], m_buffer_size, m_id == m_selected_id);
 }

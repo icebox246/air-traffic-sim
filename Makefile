@@ -28,7 +28,14 @@ HEADERS += src/radar_objects/Helicopter.hpp
 HEADERS += src/radar_objects/Glider.hpp
 HEADERS += src/radar_objects/HotAirBalloon.hpp
 
+SOURCES += src/terrain/Terrain.cpp
 HEADERS += src/terrain/Terrain.hpp
+HEADERS += src/terrain/TerrainTile.hpp
+HEADERS += src/terrain/TerrainTileKind.hpp
+HEADERS += src/terrain/MeadowTerrainTile.hpp
+HEADERS += src/terrain/MountainsTerrainTile.hpp
+HEADERS += src/terrain/UrbanTerrainTile.hpp
+HEADERS += src/terrain/WaterTerrainTile.hpp
 
 HEADERS += src/warnings/Warning.hpp
 SOURCES += src/warnings/ProximityWarning.cpp
@@ -46,6 +53,8 @@ SOURCES += src/ui/TextField.cpp
 HEADERS += src/ui/TextField.hpp
 SOURCES += src/ui/RealField.cpp
 HEADERS += src/ui/RealField.hpp
+SOURCES += src/ui/TerrainView.cpp
+HEADERS += src/ui/TerrainView.hpp
 SOURCES += src/ui/RadarView.cpp
 HEADERS += src/ui/RadarView.hpp
 SOURCES += src/ui/RouteEditor.cpp
@@ -54,12 +63,15 @@ SOURCES += src/ui/WarningList.cpp
 HEADERS += src/ui/WarningList.hpp
 SOURCES += src/ui/WarningView.cpp
 HEADERS += src/ui/WarningView.hpp
+SOURCES += src/ui/FileSelector.cpp
+HEADERS += src/ui/FileSelector.hpp
 
 HEADERS += src/ui/Signal.hpp
 
 CFLAGS += -Ithirdparty/
 CFLAGS += `pkg-config --cflags raylib`
 CFLAGS += -g
+CFLAGS += -Wno-enum-compare
 
 LIBS += `pkg-config --libs raylib`
 
@@ -70,9 +82,28 @@ sim: ${OBJECTS} ${HEADERS}
 
 dev: compile_flags.txt
 
+web: web/index.html
+
 compile_flags.txt:
 	echo ${CFLAGS} | tr ' ' '\n' > $@
 
 .obj/%.o: src/%.cpp
 	[ -d `dirname $@` ] || mkdir -p `dirname $@`
 	$(CXX) -c $< ${CFLAGS} -o $@
+
+EMFLAGS += -Os
+EMFLAGS += ${CFLAGS}
+EMFLAGS += -s WASM=1
+EMFLAGS += -s USE_GLFW=3
+EMFLAGS += -s ASYNCIFY
+EMFLAGS += -s TOTAL_MEMORY=1024MB
+EMFLAGS += --preload-file resources
+EMFLAGS += --shell-file src/shell_minimal.html
+
+web/index.html: ${SOURCES} ${HEADERS} thirdparty/libraylib.a
+	[ -d web ] || mkdir web
+	emcc -o $@ ${SOURCES} thirdparty/libraylib.a  ${EMFLAGS}
+
+thirdparty/libraylib.a:
+	[ -f $@ ] || echo "[Error] You must provide thirdparty/libraylib.a for web build!!!" || exit 1 
+
