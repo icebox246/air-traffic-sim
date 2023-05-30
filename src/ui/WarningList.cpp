@@ -16,7 +16,6 @@ WarningList::WarningList(int x, int y, int width, int height,
 void WarningList::process() {
     const int warning_height = 24;
     auto& warnings = m_radar_system.warnings();
-    Rectangle view_rec = {0};
     Rectangle content_rec = {0};
     content_rec.width = m_bounds.width - GuiGetStyle(LISTVIEW, SCROLLBAR_WIDTH);
     content_rec.height = warning_height * warnings.size();

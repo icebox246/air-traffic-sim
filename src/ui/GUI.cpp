@@ -1,22 +1,20 @@
 #include "GUI.hpp"
 
+#include <raygui.h>
 #include <raylib.h>
+#include <styles/dark/dark.h>
 
 #include "../radar_objects/MobileRadarObject.hpp"
 #include "../util.hpp"
-
-#define RAYGUI_IMPLEMENTATION
-#include <raygui.h>
-#include <styles/dark/dark.h>
 
 GUI::GUI(std::string title, RadarSystem& radar_system)
     : m_radar_system(radar_system),
       m_pause_toggle_button(HEIGHT, 0, 32, 32, "#132#"),
       m_terrain_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_radar_view(0, 0, HEIGHT, HEIGHT, radar_system),
-      m_warning_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_route_editor(0, 0, HEIGHT, HEIGHT, HEIGHT, 40, WIDTH - HEIGHT, 200,
                      radar_system),
+      m_warning_view(0, 0, HEIGHT, HEIGHT, radar_system),
       m_warning_list(HEIGHT, 248, WIDTH - HEIGHT, HEIGHT - 248 - 40,
                      radar_system),
       m_file_selector(HEIGHT, HEIGHT - 32, WIDTH - HEIGHT, 32)

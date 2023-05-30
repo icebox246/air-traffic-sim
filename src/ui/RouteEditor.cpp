@@ -53,12 +53,12 @@ RouteEditor::RouteEditor(int radar_x, int radar_y, int radar_width,
 
 RouteEditor::RoutePoint::RoutePoint(RouteCheckpoint checkpoint)
     : position(checkpoint.point()),
-      altitude(checkpoint.altitude()),
-      velocity(checkpoint.velocity()) {}
+      velocity(checkpoint.velocity()),
+      altitude(checkpoint.altitude()) {}
 
 RouteEditor::RoutePoint::RoutePoint(RealPosition position, double velocity,
                                     double altitude)
-    : position(position), altitude(altitude), velocity(velocity) {}
+    : position(position), velocity(velocity), altitude(altitude) {}
 
 RouteCheckpoint RouteEditor::RoutePoint::into_checkpoint() const {
     return RouteCheckpoint(position, velocity, altitude);
@@ -95,11 +95,6 @@ void RouteEditor::process() {
     std::string props_caption =
         "Editing: #" + std::to_string(m_radar_object_id);
     GuiGroupBox(m_props_bounds, props_caption.c_str());
-    Rectangle rec;
-    rec.x = m_props_bounds.x + 8;
-    rec.y = m_props_bounds.y + 8;
-    rec.width = m_props_bounds.width - 16;
-    rec.height = 24;
 
     m_velocity_label.process();
     m_velocity_field.process();
@@ -134,7 +129,7 @@ void RouteEditor::process() {
     auto mouse_position = GetMousePosition();
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        for (auto i = 0; i < m_points.size(); i++) {
+        for (size_t i = 0; i < m_points.size(); i++) {
             auto& point = m_points[i];
             auto sc = world_to_screen(point.position);
             if (CheckCollisionPointCircle(mouse_position, sc, 5)) {
@@ -158,7 +153,7 @@ void RouteEditor::process() {
 
     bool inserted_point = false;
     bool deleted_point = false;
-    for (auto i = 0; i < m_points.size(); i++) {
+    for (size_t i = 0; i < m_points.size(); i++) {
         auto& point = m_points[i];
         auto sl = world_to_screen(last_position);
         auto sc = world_to_screen(point.position);

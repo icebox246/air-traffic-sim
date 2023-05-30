@@ -29,8 +29,8 @@ class GUI {
     TerrainView m_terrain_view;
     RadarView m_radar_view;
     RouteEditor m_route_editor;
-    WarningList m_warning_list;
     WarningView m_warning_view;
+    WarningList m_warning_list;
     FileSelector m_file_selector;
 
     void process_widgets();
