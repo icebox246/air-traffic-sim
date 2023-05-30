@@ -132,7 +132,7 @@ void RouteEditor::process() {
         for (size_t i = 0; i < m_points.size(); i++) {
             auto& point = m_points[i];
             auto sc = world_to_screen(point.position);
-            if (CheckCollisionPointCircle(mouse_position, sc, 5)) {
+            if (CheckCollisionPointCircle(mouse_position, sc, 8)) {
                 m_dragging = true;
                 if (m_selected_point != i)
                     set_selected_point(i);
@@ -162,10 +162,10 @@ void RouteEditor::process() {
         scenter.y = (sl.y + sc.y) / 2;
 
         DrawLineV(sl, sc, BLUE);
-        DrawCircleV(sc, 5, i == m_selected_point ? GREEN : BLUE);
+        DrawCircleV(sc, 8, i == m_selected_point ? GREEN : BLUE);
 
         if (CheckCollisionPointCircle(mouse_position, scenter, 30)) {
-            DrawCircleLines(scenter.x, scenter.y, 5, GREEN);
+            DrawRing(scenter, 5, 8, 0, 360, 12, GREEN);  // Draw ring
         }
         if (!inserted_point && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) &&
             CheckCollisionPointCircle(mouse_position, scenter, 5)) {
@@ -178,7 +178,7 @@ void RouteEditor::process() {
         }
 
         if (!deleted_point && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) &&
-            CheckCollisionPointCircle(mouse_position, sc, 5) &&
+            CheckCollisionPointCircle(mouse_position, sc, 8) &&
             m_points.size() > 1) {
             m_points.erase(m_points.begin() + i);
             if (i < m_points.size())
