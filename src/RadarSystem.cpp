@@ -62,7 +62,8 @@ void RadarSystem::load_from_string_data(std::string data) {
         } else if (command == "mobiles") {
             size_t n;
             ss >> n;
-            for (size_t i = 0; i < n; i++) generate_random_mobile_radar_object();
+            for (size_t i = 0; i < n; i++)
+                generate_random_mobile_radar_object();
         } else {
             std::cerr << "[WARN] Unknown command during file load: " << command
                       << std::endl;
