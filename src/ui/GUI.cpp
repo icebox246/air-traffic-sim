@@ -107,9 +107,9 @@ void GUI::run() {
 
         BeginDrawing();
         {
+            ClearBackground(GetColor(0x3C3C3Cff));
             process_widgets();
             process_error_box();
-            ClearBackground(GetColor(0x3C3C3Cff));
         }
         EndDrawing();
     }

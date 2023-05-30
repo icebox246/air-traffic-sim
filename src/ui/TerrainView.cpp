@@ -2,6 +2,8 @@
 
 #include <raygui.h>
 
+#include <iostream>
+
 TerrainView::TerrainView(int x, int y, int width, int height,
                          const RadarSystem& radar_system)
     : m_radar_system(radar_system) {
@@ -16,14 +18,16 @@ void TerrainView::process() {
     auto sy = m_radar_system.terrain().height();
     auto const& tiles = m_radar_system.terrain().tiles();
 
-    Rectangle tile_rec;
-    tile_rec.width = m_bounds.width / sx;
-    tile_rec.height = m_bounds.height / sy;
+    double tile_size = m_bounds.width / sx;
+    double radius = tile_size / 2 * 1.7;
 
+    BeginScissorMode((int)m_bounds.x, (int)m_bounds.y, (int)m_bounds.width,
+                     (int)m_bounds.height);
     for (auto const& tile : tiles) {
         auto tpos = tile->position();
-        tile_rec.x = m_bounds.x + tpos.x() * tile_rec.width;
-        tile_rec.y = m_bounds.y + tpos.y() * tile_rec.height;
+        Vector2 center;
+        center.x = m_bounds.x + tpos.x() * tile_size + tile_size * .5;
+        center.y = m_bounds.y + tpos.y() * tile_size + tile_size * .5;
         Color color;
         switch (tile->kind()) {
             case TerrainTileKind::Meadow:
@@ -39,6 +43,7 @@ void TerrainView::process() {
                 color = GetColor(0x8bd8feff);
                 break;
         }
-        DrawRectangleRec(tile_rec, color);
+        DrawCircleSector(center, radius, 0, 360, 7, color);
     }
+    EndScissorMode();
 }
