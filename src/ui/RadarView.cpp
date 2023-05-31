@@ -30,12 +30,12 @@ void RadarView::load_textures() {
     m_icon_textures[(size_t)RadarObjectKind::Windmill] =
         LoadTexture("resources/icons_windmill.png");
 
-    for (auto i = 0; i < (size_t)RadarObjectKind::CountKinds; i++)
+    for (size_t i = 0; i < (size_t)RadarObjectKind::CountKinds; i++)
         SetTextureFilter(m_icon_textures[i], TEXTURE_FILTER_BILINEAR);
 }
 
 void RadarView::unload_textures() {
-    for (auto i = 0; i < (size_t)RadarObjectKind::CountKinds; i++)
+    for (size_t i = 0; i < (size_t)RadarObjectKind::CountKinds; i++)
         UnloadTexture(m_icon_textures[i]);
 }
 

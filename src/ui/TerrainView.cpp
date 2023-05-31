@@ -15,7 +15,6 @@ TerrainView::TerrainView(int x, int y, int width, int height,
 
 void TerrainView::process() {
     auto sx = m_radar_system.terrain().width();
-    auto sy = m_radar_system.terrain().height();
     auto const& tiles = m_radar_system.terrain().tiles();
 
     double tile_size = m_bounds.width / sx;

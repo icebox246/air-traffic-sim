@@ -62,7 +62,8 @@ void RadarSystem::load_from_string_data(std::string data) {
         } else if (command == "mobiles") {
             size_t n;
             ss >> n;
-            for (auto i = 0; i < n; i++) generate_random_mobile_radar_object();
+            for (size_t i = 0; i < n; i++)
+                generate_random_mobile_radar_object();
         } else {
             std::cerr << "[WARN] Unknown command during file load: " << command
                       << std::endl;
@@ -72,7 +73,7 @@ void RadarSystem::load_from_string_data(std::string data) {
 
 void RadarSystem::process(double delta_time) {
     int erased_count = 0;
-    for (auto i = 0; i < m_radar_objects.size(); i++) {
+    for (size_t i = 0; i < m_radar_objects.size(); i++) {
         auto& ro = m_radar_objects[i];
         ro->process(delta_time);
         auto as_mobile = dynamic_cast<MobileRadarObject*>(ro.get());
@@ -89,8 +90,8 @@ void RadarSystem::process(double delta_time) {
 
     m_warnings.clear();
 
-    for (auto i = 0; i < m_radar_objects.size(); i++) {
-        for (auto j = i + 1; j < m_radar_objects.size(); j++) {
+    for (size_t i = 0; i < m_radar_objects.size(); i++) {
+        for (size_t j = i + 1; j < m_radar_objects.size(); j++) {
             // TODO: parameterize proximity warning threshold
             CollisionComputer cc(*m_radar_objects[i], *m_radar_objects[j], 4);
 

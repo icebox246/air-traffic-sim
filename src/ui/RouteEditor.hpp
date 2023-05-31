@@ -22,9 +22,9 @@ class RouteEditor : public Widget {
     Rectangle m_props_bounds;
 
     Label m_velocity_label;
-    Label m_altitude_label;
-
     RealField m_velocity_field;
+
+    Label m_altitude_label;
     RealField m_altitude_field;
 
     Button m_finish_button;

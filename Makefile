@@ -71,11 +71,15 @@ HEADERS += src/ui/Signal.hpp
 CFLAGS += -Ithirdparty/
 CFLAGS += `pkg-config --cflags raylib`
 CFLAGS += -g
-CFLAGS += -Wno-enum-compare
+CFLAGS += -O2
+
+WCFLAGS += -Wall
+WCFLAGS += -Werror
 
 LIBS += `pkg-config --libs raylib`
 
 OBJECTS = $(subst src/,.obj/,$(subst .cpp,.o,$(SOURCES)))
+OBJECTS += .obj/raygui.o
 
 sim: ${OBJECTS} ${HEADERS}
 	${CXX} -o $@ ${LIBS} ${OBJECTS}
@@ -85,11 +89,14 @@ dev: compile_flags.txt
 web: web/index.html
 
 compile_flags.txt:
-	echo ${CFLAGS} | tr ' ' '\n' > $@
+	echo ${CFLAGS} ${WCFLAGS} | tr ' ' '\n' > $@
+
+.obj/raygui.o: thirdparty/raygui.cpp
+	$(CXX) -c $< ${CFLAGS} -Wno-enum-compare -o $@
 
 .obj/%.o: src/%.cpp
 	[ -d `dirname $@` ] || mkdir -p `dirname $@`
-	$(CXX) -c $< ${CFLAGS} -o $@
+	$(CXX) -c $< ${CFLAGS} ${WCFLAGS} -o $@
 
 EMFLAGS += -Os
 EMFLAGS += ${CFLAGS}
@@ -102,7 +109,7 @@ EMFLAGS += --shell-file src/shell_minimal.html
 
 web/index.html: ${SOURCES} ${HEADERS} thirdparty/libraylib.a
 	[ -d web ] || mkdir web
-	emcc -o $@ ${SOURCES} thirdparty/libraylib.a  ${EMFLAGS}
+	emcc -o $@ ${SOURCES} thirdparty/raygui.cpp thirdparty/libraylib.a  ${EMFLAGS}
 
 thirdparty/libraylib.a:
 	[ -f $@ ] || echo "[Error] You must provide thirdparty/libraylib.a for web build!!!" || exit 1 
