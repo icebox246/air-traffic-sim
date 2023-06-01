@@ -43,7 +43,12 @@ void WarningList::process() {
                     color = ORANGE;
                     break;
             }
-            DrawText(w->message().c_str(), label_rec.x, label_rec.y, 10, color);
+            Vector2 position;
+            position.x = label_rec.x;
+            position.y = label_rec.y;
+            DrawTextEx(GuiGetFont(), w->message().c_str(), position,
+                       GuiGetStyle(DEFAULT, TEXT_SIZE),
+                       GuiGetStyle(DEFAULT, TEXT_SPACING), color);
             label_rec.y += label_rec.height;
         }
     }
