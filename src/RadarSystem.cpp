@@ -118,7 +118,8 @@ void RadarSystem::generate_random_mobile_radar_object() {
         origin = RealPosition((rand() / (double)RAND_MAX) * m_terrain.width(),
                               (rand() & 1) * int(m_terrain.height() + 2) - 1);
 
-    { // generate checkpoints in the middle of route
+    // generate checkpoints in the middle of route
+    {
         RealPosition last_pos = origin;
         for (auto i = 0; i < checkpoint_count; i++) {
             RealPosition pos;
@@ -135,7 +136,8 @@ void RadarSystem::generate_random_mobile_radar_object() {
         }
     }
 
-    { // generate final checkpoint
+    // generate final checkpoint
+    {
         RealPosition pos;
         if (rand() & 1)
             pos =
