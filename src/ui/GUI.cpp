@@ -132,7 +132,7 @@ std::string GUI::m_error_box_message = "";
 void GUI::process_error_box() {
     if (m_error_box_visible) {
         Rectangle bounds;
-        bounds.width = 200;
+        bounds.width = 300;
         bounds.height = 100;
         bounds.x = WIDTH * 0.5 - bounds.width * 0.5;
         bounds.y = HEIGHT * 0.5 - bounds.height * 0.5;

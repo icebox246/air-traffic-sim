@@ -27,9 +27,6 @@ void WarningList::process() {
     label_rec.x = m_bounds.x + 4;
     label_rec.y = m_bounds.y + 32 + m_scroll.y;
 
-    // TODO: fix scrolling
-    // Currently cutting off non-visible elements from scroll view is not
-    // working. I tried using scissor mode but it failed to work.
     BeginScissorMode(m_bounds.x, m_bounds.y + 24, m_bounds.width,
                      m_bounds.height - 32);
     {

@@ -20,23 +20,20 @@ Terrain Terrain::from_string_data(std::string data) {
         auto position = IntegerPosition(tx, ty);
         switch (c) {
             case '.':  // meadow
-                tiles.push_back(
-                    std::move(std::make_unique<MeadowTerrainTile>(position)));
+                tiles.push_back(std::make_unique<MeadowTerrainTile>(position));
                 tx++;
                 break;
             case 'u':  // urban
-                tiles.push_back(
-                    std::move(std::make_unique<UrbanTerrainTile>(position)));
+                tiles.push_back(std::make_unique<UrbanTerrainTile>(position));
                 tx++;
                 break;
             case 'M':  // mountains
-                tiles.push_back(std::move(
-                    std::make_unique<MountainsTerrainTile>(position)));
+                tiles.push_back(
+                    std::make_unique<MountainsTerrainTile>(position));
                 tx++;
                 break;
             case '~':  // water
-                tiles.push_back(
-                    std::move(std::make_unique<WaterTerrainTile>(position)));
+                tiles.push_back(std::make_unique<WaterTerrainTile>(position));
                 tx++;
                 break;
             case '\n':  // go to next row

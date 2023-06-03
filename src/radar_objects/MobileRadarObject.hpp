@@ -14,7 +14,7 @@ class MobileRadarObject : public RadarObject {
     Route const& route() const { return m_route; }
     void change_route(Route new_route) { m_route = new_route; }
     virtual RealPosition position_after(double delta_time) const;
-    virtual double altitude_after(double delta_time) const;
+    double altitude_after(double delta_time) const;
     virtual double upper_bound(double delta_time) const {
         return altitude_after(delta_time) + m_radius;
     }
@@ -22,6 +22,6 @@ class MobileRadarObject : public RadarObject {
         return altitude_after(delta_time) - m_radius;
     }
     virtual void process(double delta_time);
-    double heading();
+    double heading() const;
     double time_to_checkpoint() const;
 };

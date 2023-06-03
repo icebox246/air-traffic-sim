@@ -67,6 +67,7 @@ double MobileRadarObject::altitude_after(double delta_time) const {
 void MobileRadarObject::process(double delta_time) {
     while (time_to_checkpoint() <= delta_time) {
         delta_time -= time_to_checkpoint();
+        m_position = m_route.target();
         if (!m_route.advance_checkpoint()) {
             // should destroy object
             return;
@@ -76,7 +77,7 @@ void MobileRadarObject::process(double delta_time) {
     m_position = position_after(delta_time);
 }
 
-double MobileRadarObject::heading() {
+double MobileRadarObject::heading() const {
     RealPosition target = m_route.target();
     double dx = m_position.x() - target.x();
     double dy = m_position.y() - target.y();

@@ -13,7 +13,7 @@ class RadarSystem {
    private:
     std::vector<std::unique_ptr<RadarObject>> m_radar_objects;
     std::vector<std::unique_ptr<Warning>> m_warnings;
-    Terrain m_terrain = Terrain::from_string_data("~");
+    Terrain m_terrain = Terrain::from_string_data("");
 
    public:
     RadarSystem();
