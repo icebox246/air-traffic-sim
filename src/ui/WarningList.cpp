@@ -27,9 +27,6 @@ void WarningList::process() {
     label_rec.x = m_bounds.x + 4;
     label_rec.y = m_bounds.y + 32 + m_scroll.y;
 
-    // TODO: fix scrolling
-    // Currently cutting off non-visible elements from scroll view is not
-    // working. I tried using scissor mode but it failed to work.
     BeginScissorMode(m_bounds.x, m_bounds.y + 24, m_bounds.width,
                      m_bounds.height - 32);
     {
@@ -43,7 +40,12 @@ void WarningList::process() {
                     color = ORANGE;
                     break;
             }
-            DrawText(w->message().c_str(), label_rec.x, label_rec.y, 10, color);
+            Vector2 position;
+            position.x = label_rec.x;
+            position.y = label_rec.y;
+            DrawTextEx(GuiGetFont(), w->message().c_str(), position,
+                       GuiGetStyle(DEFAULT, TEXT_SIZE),
+                       GuiGetStyle(DEFAULT, TEXT_SPACING), color);
             label_rec.y += label_rec.height;
         }
     }

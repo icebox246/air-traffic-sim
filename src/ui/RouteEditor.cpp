@@ -92,6 +92,12 @@ Route RouteEditor::get_route() const {
 }
 
 void RouteEditor::process() {
+    process_widgets();
+    process_mouse_dragging();
+    process_points();
+}
+
+void RouteEditor::process_widgets() {
     std::string props_caption =
         "Editing: #" + std::to_string(m_radar_object_id);
     GuiGroupBox(m_props_bounds, props_caption.c_str());
@@ -107,9 +113,9 @@ void RouteEditor::process() {
 
     m_points[m_selected_point].velocity = m_velocity_field.get_value();
     m_points[m_selected_point].altitude = m_altitude_field.get_value();
+}
 
-    RealPosition last_position = m_radar_object_position;
-
+void RouteEditor::process_mouse_dragging() {
     int sx = m_radar_system.terrain().width();
     int sy = m_radar_system.terrain().height();
 
@@ -125,7 +131,6 @@ void RouteEditor::process() {
         double y = (spos.y - m_radar_bounds.y) * sy / m_radar_bounds.height;
         return RealPosition(x, y);
     };
-
     auto mouse_position = GetMousePosition();
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -150,7 +155,27 @@ void RouteEditor::process() {
         auto& point = m_points[m_selected_point];
         point.position = screen_to_world(mouse_position);
     }
+}
 
+void RouteEditor::process_points() {
+    int sx = m_radar_system.terrain().width();
+    int sy = m_radar_system.terrain().height();
+
+    auto world_to_screen = [&](RealPosition wpos) {
+        Vector2 v;
+        v.x = wpos.x() / sx * m_radar_bounds.width + m_radar_bounds.x;
+        v.y = wpos.y() / sy * m_radar_bounds.height + m_radar_bounds.y;
+        return v;
+    };
+
+    auto screen_to_world = [&](Vector2 spos) {
+        double x = (spos.x - m_radar_bounds.x) * sx / m_radar_bounds.width;
+        double y = (spos.y - m_radar_bounds.y) * sy / m_radar_bounds.height;
+        return RealPosition(x, y);
+    };
+
+    auto mouse_position = GetMousePosition();
+    RealPosition last_position = m_radar_object_position;
     bool inserted_point = false;
     bool deleted_point = false;
     for (size_t i = 0; i < m_points.size(); i++) {

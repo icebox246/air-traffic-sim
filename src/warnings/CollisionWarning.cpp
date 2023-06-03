@@ -12,7 +12,7 @@ WarningKind CollisionWarning::kind() const { return WarningKind::Collision; };
 
 std::string CollisionWarning::message() const {
     std::stringstream ss;
-    ss << "#" << m_id1 << " & #" << std::to_string(m_id2) << " collide (in "
+    ss << "#" << m_id1 << " & #" << m_id2 << " collide (in "
        << std::setprecision(1) << std::fixed << m_time << "s)";
     return ss.str();
 }

@@ -64,7 +64,7 @@ void RadarSystem::load_from_string_data(std::string data) {
             ss >> n;
             for (size_t i = 0; i < n; i++)
                 generate_random_mobile_radar_object();
-        } else {
+        } else if (!command.empty()) {
             std::cerr << "[WARN] Unknown command during file load: " << command
                       << std::endl;
         }
@@ -118,6 +118,7 @@ void RadarSystem::generate_random_mobile_radar_object() {
         origin = RealPosition((rand() / (double)RAND_MAX) * m_terrain.width(),
                               (rand() & 1) * int(m_terrain.height() + 2) - 1);
 
+    // generate checkpoints in the middle of route
     {
         RealPosition last_pos = origin;
         for (auto i = 0; i < checkpoint_count; i++) {
@@ -135,6 +136,7 @@ void RadarSystem::generate_random_mobile_radar_object() {
         }
     }
 
+    // generate final checkpoint
     {
         RealPosition pos;
         if (rand() & 1)

@@ -1,6 +1,6 @@
 #include "RadarView.hpp"
 
-#include <raylib.h>
+#include <raygui.h>
 
 #include "../radar_objects/MobileRadarObject.hpp"
 #include "../util.hpp"
@@ -79,8 +79,12 @@ void RadarView::process() {
         origin.x = tex.width * texture_scale * 0.5;
         origin.y = tex.height * texture_scale * 0.5;
         DrawTexturePro(tex, srec, drec, origin, angle, WHITE);
-        DrawText(("#" + std::to_string(ro->id())).c_str(), x, y + 32, 10,
-                 BLACK);
+        Vector2 position;
+        position.x = x;
+        position.y = y + 32;
+        DrawTextEx(GuiGetFont(), ("#" + std::to_string(ro->id())).c_str(),
+                   position, GuiGetStyle(DEFAULT, TEXT_SIZE),
+                   GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
     }
     EndScissorMode();
 

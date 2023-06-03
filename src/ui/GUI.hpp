@@ -25,7 +25,9 @@ class GUI {
     std::vector<std::reference_wrapper<Widget>> m_widgets;
     RadarSystem& m_radar_system;
     bool m_paused = false;
+    bool m_fast_forwarding = false;
     Button m_pause_toggle_button;
+    Button m_fast_forward_toggle_button;
     TerrainView m_terrain_view;
     RadarView m_radar_view;
     RouteEditor m_route_editor;

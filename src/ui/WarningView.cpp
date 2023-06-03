@@ -37,6 +37,9 @@ void WarningView::process() {
         auto pos = world_to_screen(w->point());
         GuiDrawIcon(ICON_CRACK_POINTS, pos.x, pos.y, 1, color);
         std::string msg = w->short_message();
-        DrawText(msg.c_str(), pos.x, pos.y + 12, 10, BLACK);
+        pos.y += 14;
+        DrawTextEx(GuiGetFont(), msg.c_str(), pos,
+                   GuiGetStyle(DEFAULT, TEXT_SIZE),
+                   GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
     }
 }

@@ -63,4 +63,9 @@ class RouteEditor : public Widget {
     void load_from_object(MobileRadarObject& obj);
     Route get_route() const;
     virtual void process();
+
+   private:
+    void process_widgets();
+    void process_mouse_dragging();
+    void process_points();
 };
