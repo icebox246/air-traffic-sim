@@ -28,8 +28,13 @@ bool RadarSystem::change_mobile_object_route(RadarObjectId id,
 }
 
 void RadarSystem::load_from_string_data(std::string data) {
-    m_radar_objects.clear();
     std::stringstream ss(data);
+
+    size_t mobiles_to_add = 0;
+
+    Terrain new_terrain = Terrain::from_string_data("");
+
+    std::vector<std::unique_ptr<RadarObject>> new_objects;
 
     while (!ss.eof()) {
         std::string command;
@@ -43,32 +48,38 @@ void RadarSystem::load_from_string_data(std::string data) {
                 ss >> line;
                 line += "\n";
             }
-            m_terrain = Terrain::from_string_data(data);
+            new_terrain = Terrain::from_string_data(data);
         } else if (command == "skyscraper") {
             double x, y, height;
             ss >> x >> y >> height;
-            m_radar_objects.emplace_back(
+            new_objects.emplace_back(
                 std::make_unique<Skyscraper>(RealPosition(x, y), height));
         } else if (command == "mountain") {
             double x, y, height;
             ss >> x >> y >> height;
-            m_radar_objects.emplace_back(
+            new_objects.emplace_back(
                 std::make_unique<Mountain>(RealPosition(x, y), height));
         } else if (command == "windmill") {
             double x, y, height;
             ss >> x >> y >> height;
-            m_radar_objects.emplace_back(
+            new_objects.emplace_back(
                 std::make_unique<Windmill>(RealPosition(x, y), height));
         } else if (command == "mobiles") {
             size_t n;
             ss >> n;
-            for (size_t i = 0; i < n; i++)
-                generate_random_mobile_radar_object();
+            mobiles_to_add += n;
         } else if (!command.empty()) {
-            std::cerr << "[WARN] Unknown command during file load: " << command
-                      << std::endl;
+            throw UnknownCommandException(command);
         }
     }
+
+    // assing new terrain data
+    m_terrain = std::move(new_terrain);
+
+    // add specified objects
+    m_radar_objects = std::move(new_objects);
+    for (size_t i = 0; i < mobiles_to_add; i++)
+        generate_random_mobile_radar_object();
 }
 
 void RadarSystem::process(double delta_time) {

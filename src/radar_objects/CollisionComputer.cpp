@@ -36,10 +36,10 @@ CollisionComputer::CollisionComputer(RadarObject const& obj1,
     for (double dt = 0.; dt <= 10.; dt += 0.1) {
         auto p1 = obj1.position_after(dt);
         auto p2 = obj2.position_after(dt);
-        auto l1 = obj1.lower_bound(dt);
-        auto u1 = obj1.upper_bound(dt);
-        auto l2 = obj2.lower_bound(dt);
-        auto u2 = obj2.upper_bound(dt);
+        auto l1 = obj1.lower_altitude_bound_after(dt);
+        auto u1 = obj1.upper_altitude_bound_after(dt);
+        auto l2 = obj2.lower_altitude_bound_after(dt);
+        auto u2 = obj2.upper_altitude_bound_after(dt);
         double dist = p1.distance_from(p2);
         if (bounds_overlap(l1, u1, l2, u2) &&
             dist <= obj1.radius() + obj2.radius()) {

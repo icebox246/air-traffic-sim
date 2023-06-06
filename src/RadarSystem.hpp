@@ -16,6 +16,16 @@ class RadarSystem {
     Terrain m_terrain = Terrain::from_string_data("");
 
    public:
+    class UnknownCommandException {
+        std::string m_command;
+
+       public:
+        UnknownCommandException(std::string command) : m_command(command) {}
+        std::string message() const {
+            return "Encountered unknown command: `" + m_command + "`";
+        }
+    };
+
     RadarSystem();
     std::vector<std::unique_ptr<RadarObject>> const& radar_objects() const {
         return m_radar_objects;
@@ -26,7 +36,7 @@ class RadarSystem {
     Terrain const& terrain() const { return m_terrain; }
 
     bool change_mobile_object_route(RadarObjectId id, Route new_route);
-    void load_from_string_data(std::string data);
+    void load_from_string_data(std::string data) noexcept(false);
     void process(double delta);
 
    private:

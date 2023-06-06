@@ -114,3 +114,21 @@ web/index.html: ${SOURCES} ${HEADERS} thirdparty/libraylib.a
 thirdparty/libraylib.a:
 	[ -f $@ ] || echo "[Error] You must provide thirdparty/libraylib.a for web build!!!" || exit 1 
 
+
+TESTS += tests/position.cpp
+TESTS += tests/terrain.cpp
+TESTS += tests/mobile.cpp
+TESTS += tests/collision.cpp
+
+TEST_E = $(subst .cpp,.cpp.test,$(TESTS))
+
+test: ${OBJECTS} ${TEST_E} 
+	@echo Tests finished!
+
+%.cpp.test: %.cpp
+	@${CXX} -c ${CFLAGS} $< -o $@.o
+	@${CXX} $@.o ${subst .obj/main.o,,${OBJECTS}} ${LIBS} -o $@.ex
+	@./$@.ex || (echo "FAILURE: $@"; exit 42; ) 
+	@echo "SUCCESS: $@"
+
+

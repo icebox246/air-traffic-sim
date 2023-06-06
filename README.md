@@ -17,6 +17,14 @@ make
 ./sim
 ```
 
+## Running tests
+
+Requirements - same as above
+
+```console
+make test
+```
+
 ## Web build
 
 To build for web you need to provide compiled raylib archive in
