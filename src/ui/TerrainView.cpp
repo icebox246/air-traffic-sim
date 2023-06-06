@@ -15,6 +15,19 @@ TerrainView::TerrainView(int x, int y, int width, int height,
 
 void TerrainView::process() {
     auto sx = m_radar_system.terrain().width();
+    if (sx == 0) {
+        // That means, there probably is no data loaded
+        Vector2 position;
+        position.x = m_bounds.x + 10;
+        position.y = m_bounds.y + 10;
+        DrawTextEx(
+            GuiGetFont(),
+            "Please, make sure to load a file with simulation data!\n"
+            "This can be done by clicking the button in bottom right corner",
+            position, GuiGetStyle(DEFAULT, TEXT_SIZE),
+            GuiGetStyle(DEFAULT, TEXT_SPACING), ORANGE);
+        return;
+    }
     auto const& tiles = m_radar_system.terrain().tiles();
 
     double tile_size = m_bounds.width / sx;
