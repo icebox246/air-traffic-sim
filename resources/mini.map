@@ -1,0 +1,18 @@
+mobiles 1
+
+terrain
+uuu~uuuu
+uuu~uuuu
+uuu~uuuu
+uuu~uuuu
+uuu~uuuu
+uuu~uuuu
+uu~~uu..
+uu~~u...
+endterrain
+
+skyscraper 1 2 120
+skyscraper 5 4 120
+skyscraper 6.5 4.2 100
+
+windmill 7 7 50
