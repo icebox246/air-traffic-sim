@@ -81,7 +81,11 @@ GUI::GUI(std::string title, RadarSystem& radar_system)
         std::string data = std::string(raw_data);
         UnloadFileText(raw_data);
 
-        m_radar_system.load_from_string_data(data);
+        try {
+            m_radar_system.load_from_string_data(data);
+        } catch (RadarSystem::UnknownCommandException const& e) {
+            GUI::show_error_box(e.message());
+        }
     });
     add_widget(m_file_selector);
 }
