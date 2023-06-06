@@ -15,10 +15,10 @@ class MobileRadarObject : public RadarObject {
     void change_route(Route new_route) { m_route = new_route; }
     virtual RealPosition position_after(double delta_time) const;
     double altitude_after(double delta_time) const;
-    virtual double upper_bound(double delta_time) const {
+    virtual double upper_altitude_bound_after(double delta_time) const {
         return altitude_after(delta_time) + m_radius;
     }
-    virtual double lower_bound(double delta_time) const {
+    virtual double lower_altitude_bound_after(double delta_time) const {
         return altitude_after(delta_time) - m_radius;
     }
     virtual void process(double delta_time);
