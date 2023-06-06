@@ -116,14 +116,16 @@ thirdparty/libraylib.a:
 
 
 TESTS += tests/position.cpp
+TESTS += tests/terrain.cpp
 TEST_E = $(subst .cpp,.cpp.test,$(TESTS))
 
-test: ${TEST_E}
+test: ${OBJECTS} ${TEST_E} 
 	@echo Tests finished!
 
 %.cpp.test: %.cpp
-	@${CXX} $< -o $@
-	@./$@ || (echo "FAILURE: $@"; exit 42; ) 
+	@${CXX} -c ${CFLAGS} $< -o $@.o
+	@${CXX} $@.o ${subst .obj/main.o,,${OBJECTS}} ${LIBS} -o $@.ex
+	@./$@.ex || (echo "FAILURE: $@"; exit 42; ) 
 	@echo "SUCCESS: $@"
 
 

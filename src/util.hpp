@@ -24,7 +24,7 @@
         if ((expression) != (value)) {                                       \
             std::cerr << __FILE__ << ":" << __LINE__                         \
                       << ": TODO Assertion failed: " << #expression << " = " \
-                      << expression << " != " << value << std::endl;         \
+                      << (expression) << " != " << (value) << std::endl;     \
             exit(44);                                                        \
         }                                                                    \
     } while (0)
@@ -34,7 +34,7 @@
         if ((expression) == (value)) {                                       \
             std::cerr << __FILE__ << ":" << __LINE__                         \
                       << ": TODO Assertion failed: " << #expression << " = " \
-                      << expression << " == " << value << std::endl;         \
+                      << (expression) << " == " << (value) << std::endl;     \
             exit(45);                                                        \
         }                                                                    \
     } while (0)

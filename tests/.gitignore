@@ -1,1 +1,2 @@
-*.cpp.test
+*.cpp.test.ex
+*.o
