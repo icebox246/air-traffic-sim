@@ -117,6 +117,8 @@ thirdparty/libraylib.a:
 
 TESTS += tests/position.cpp
 TESTS += tests/terrain.cpp
+TESTS += tests/mobile.cpp
+
 TEST_E = $(subst .cpp,.cpp.test,$(TESTS))
 
 test: ${OBJECTS} ${TEST_E} 

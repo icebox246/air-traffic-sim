@@ -54,9 +54,11 @@ double MobileRadarObject::altitude_after(double delta_time) const {
         double t;
         while (current_point != checkpoints.end() &&
                (t = time_to_point(*current_point)) <= delta_time) {
-            position = current_point->point();
-            altitude = current_point->altitude();
             current_point++;
+            if (current_point != checkpoints.end()) {
+                position = current_point->point();
+                altitude = current_point->altitude();
+            }
             delta_time -= t;
         }
     }
