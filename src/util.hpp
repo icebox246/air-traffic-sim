@@ -18,3 +18,23 @@
             exit(43);                                               \
         }                                                           \
     } while (0)
+
+#define ASSERT_EQ(expression, value)                                         \
+    do {                                                                     \
+        if ((expression) != (value)) {                                       \
+            std::cerr << __FILE__ << ":" << __LINE__                         \
+                      << ": TODO Assertion failed: " << #expression << " = " \
+                      << expression << " != " << value << std::endl;         \
+            exit(44);                                                        \
+        }                                                                    \
+    } while (0)
+
+#define ASSERT_NEQ(expression, value)                                        \
+    do {                                                                     \
+        if ((expression) == (value)) {                                       \
+            std::cerr << __FILE__ << ":" << __LINE__                         \
+                      << ": TODO Assertion failed: " << #expression << " = " \
+                      << expression << " == " << value << std::endl;         \
+            exit(45);                                                        \
+        }                                                                    \
+    } while (0)
