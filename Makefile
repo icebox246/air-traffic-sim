@@ -87,6 +87,7 @@ sim: ${OBJECTS} ${HEADERS}
 dev: compile_flags.txt
 
 web: web/index.html
+	zip web.zip web/*
 
 compile_flags.txt:
 	echo ${CFLAGS} ${WCFLAGS} | tr ' ' '\n' > $@

@@ -2,6 +2,7 @@ sim
 compile_flags.txt
 .obj
 web/
+web.zip
 
 # You have to provide those by yourself
 thirdparty/raylib.h
