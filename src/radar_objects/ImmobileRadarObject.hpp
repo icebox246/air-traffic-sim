@@ -16,9 +16,9 @@ class ImmobileRadarObject : public RadarObject {
     }
     virtual double upper_altitude_bound_after(double delta_time) const {
         return m_height;
-    };
+    }
     virtual double lower_altitude_bound_after(double delta_time) const {
         return 0;
-    };
+    }
     virtual void process(double delta_time) {}
 };

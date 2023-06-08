@@ -40,6 +40,11 @@ void RadarView::unload_textures() {
 }
 
 void RadarView::process() {
+    process_drawing();
+    process_mouse_clicking();
+}
+
+void RadarView::process_drawing() {
     auto& radar_objects = m_radar_system.radar_objects();
     auto sx = m_radar_system.terrain().width();
     auto sy = m_radar_system.terrain().height();
@@ -47,7 +52,7 @@ void RadarView::process() {
     BeginScissorMode(m_bounds.x, m_bounds.y, m_bounds.width, m_bounds.height);
     for (auto& ro : radar_objects) {
         RealPosition pos = ro->position();
-        float texture_scale = 0.4;
+        float texture_scale = ro->radius() + 0.05;
         double angle = 0;
         auto as_mobile = dynamic_cast<MobileRadarObject*>(ro.get());
         if (as_mobile) {
@@ -81,12 +86,26 @@ void RadarView::process() {
         DrawTexturePro(tex, srec, drec, origin, angle, WHITE);
         Vector2 position;
         position.x = x;
-        position.y = y + 32;
+        position.y = y + 20;
         DrawTextEx(GuiGetFont(), ("#" + std::to_string(ro->id())).c_str(),
                    position, GuiGetStyle(DEFAULT, TEXT_SIZE),
                    GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
+        position.y += GuiGetStyle(DEFAULT, TEXT_SIZE) +
+                      GuiGetStyle(DEFAULT, TEXT_SPACING);
+        DrawTextEx(
+            GuiGetFont(),
+            ("^" + std::to_string((int)ro->upper_altitude_bound_after(0)))
+                .c_str(),
+            position, GuiGetStyle(DEFAULT, TEXT_SIZE),
+            GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
     }
     EndScissorMode();
+}
+
+void RadarView::process_mouse_clicking() {
+    auto& radar_objects = m_radar_system.radar_objects();
+    auto sx = m_radar_system.terrain().width();
+    auto sy = m_radar_system.terrain().height();
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         auto mouse_x = GetMouseX();
@@ -98,7 +117,7 @@ void RadarView::process() {
             double x = pos.x() / sx * m_bounds.width;
             double y = pos.y() / sy * m_bounds.height;
 
-            if (RealPosition(x, y).distance_from(mouse_pos) > 32) continue;
+            if (RealPosition(x, y).distance_from(mouse_pos) > 20) continue;
 
             m_signal_radar_object_clicked.call(ro->id());
         }

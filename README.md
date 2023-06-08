@@ -44,6 +44,11 @@ make web
 emrun web
 ```
 
+### Test online without building
+
+Build of this application can be found here: [link](https://icebox246.itch.io/air-traffic-simulator).
+Password is `12345678`.
+
 ## Credits
 
 This package includes `raygui.h`, which is by raysan5:

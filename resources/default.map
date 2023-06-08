@@ -34,12 +34,12 @@ MMM.............................
 endterrain
 
 skyscraper 22 23 100
-skyscraper 20 25 120
+skyscraper 20.5 25.5 120
 skyscraper 19 25 100
 
-mountain 1 25 320
+mountain 1 23 320
 mountain 2 27 350
-mountain 2 2  250
+mountain 2 1  250
 
 windmill 17 14 70
 windmill 19 15 80
