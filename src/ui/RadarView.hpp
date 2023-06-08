@@ -21,4 +21,8 @@ class RadarView : public Widget {
     void load_textures();
     void unload_textures();
     virtual void process();
+
+   private:
+    void process_drawing();
+    void process_mouse_clicking();
 };

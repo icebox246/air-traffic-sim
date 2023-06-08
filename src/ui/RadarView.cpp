@@ -40,6 +40,11 @@ void RadarView::unload_textures() {
 }
 
 void RadarView::process() {
+    process_drawing();
+    process_mouse_clicking();
+}
+
+void RadarView::process_drawing() {
     auto& radar_objects = m_radar_system.radar_objects();
     auto sx = m_radar_system.terrain().width();
     auto sy = m_radar_system.terrain().height();
@@ -85,14 +90,22 @@ void RadarView::process() {
         DrawTextEx(GuiGetFont(), ("#" + std::to_string(ro->id())).c_str(),
                    position, GuiGetStyle(DEFAULT, TEXT_SIZE),
                    GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
-        position.y += GuiGetStyle(DEFAULT, TEXT_SIZE) + GuiGetStyle(DEFAULT, TEXT_SPACING);
+        position.y += GuiGetStyle(DEFAULT, TEXT_SIZE) +
+                      GuiGetStyle(DEFAULT, TEXT_SPACING);
         DrawTextEx(
             GuiGetFont(),
-            ("^" + std::to_string((int)ro->upper_altitude_bound_after(0))).c_str(),
+            ("^" + std::to_string((int)ro->upper_altitude_bound_after(0)))
+                .c_str(),
             position, GuiGetStyle(DEFAULT, TEXT_SIZE),
             GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
     }
     EndScissorMode();
+}
+
+void RadarView::process_mouse_clicking() {
+    auto& radar_objects = m_radar_system.radar_objects();
+    auto sx = m_radar_system.terrain().width();
+    auto sy = m_radar_system.terrain().height();
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         auto mouse_x = GetMouseX();
