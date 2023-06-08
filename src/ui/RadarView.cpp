@@ -85,6 +85,12 @@ void RadarView::process() {
         DrawTextEx(GuiGetFont(), ("#" + std::to_string(ro->id())).c_str(),
                    position, GuiGetStyle(DEFAULT, TEXT_SIZE),
                    GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
+        position.y += GuiGetStyle(DEFAULT, TEXT_SIZE) + GuiGetStyle(DEFAULT, TEXT_SPACING);
+        DrawTextEx(
+            GuiGetFont(),
+            ("^" + std::to_string((int)ro->upper_altitude_bound_after(0))).c_str(),
+            position, GuiGetStyle(DEFAULT, TEXT_SIZE),
+            GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
     }
     EndScissorMode();
 
