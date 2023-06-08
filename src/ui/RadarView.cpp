@@ -52,7 +52,7 @@ void RadarView::process_drawing() {
     BeginScissorMode(m_bounds.x, m_bounds.y, m_bounds.width, m_bounds.height);
     for (auto& ro : radar_objects) {
         RealPosition pos = ro->position();
-        float texture_scale = 0.4;
+        float texture_scale = ro->radius() + 0.05;
         double angle = 0;
         auto as_mobile = dynamic_cast<MobileRadarObject*>(ro.get());
         if (as_mobile) {
@@ -86,7 +86,7 @@ void RadarView::process_drawing() {
         DrawTexturePro(tex, srec, drec, origin, angle, WHITE);
         Vector2 position;
         position.x = x;
-        position.y = y + 32;
+        position.y = y + 20;
         DrawTextEx(GuiGetFont(), ("#" + std::to_string(ro->id())).c_str(),
                    position, GuiGetStyle(DEFAULT, TEXT_SIZE),
                    GuiGetStyle(DEFAULT, TEXT_SPACING), BLACK);
@@ -117,7 +117,7 @@ void RadarView::process_mouse_clicking() {
             double x = pos.x() / sx * m_bounds.width;
             double y = pos.y() / sy * m_bounds.height;
 
-            if (RealPosition(x, y).distance_from(mouse_pos) > 32) continue;
+            if (RealPosition(x, y).distance_from(mouse_pos) > 20) continue;
 
             m_signal_radar_object_clicked.call(ro->id());
         }
