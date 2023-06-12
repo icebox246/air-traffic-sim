@@ -5,6 +5,5 @@ web/
 web.zip
 
 # You have to provide those by yourself
-thirdparty/raylib.h
 thirdparty/libraylib.a
 
